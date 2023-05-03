@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.KqzljgMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Kqzljg" >
+  
+		    <result column="id" property="id" />
+		    <result column="kongqileixing" property="kongqileixing" />
+		    <result column="yangqi" property="yangqi" />
+		    <result column="eryanghuatan" property="eryanghuatan" />
+		    <result column="danqi" property="danqi" />
+		    <result column="xiyouqiti" property="xiyouqiti" />
+		    <result column="chouyang" property="chouyang" />
+		    <result column="yiyanghuadan" property="yiyanghuadan" />
+		    <result column="shuizhengqi" property="shuizhengqi" />
+		    <result column="pm25" property="pm25" />
+		    <result column="pm25_val" property="pm25Val" />
+		    <result column="pm10_year" property="pm10Year" />
+		    <result column="pm10_hour" property="pm10Hour" />
+		    <result column="xiyanliang" property="xiyanliang" />
+		    <result column="mei" property="mei" />
+		    <result column="tianranqi" property="tianranqi" />
+		    <result column="muchai" property="muchai" />
+		    <result column="dian" property="dian" />
+		    <result column="qita" property="qita" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  KQZLJG
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+     <select id="tongjiDate" resultMap="BaseResultMap" >
+   
+   SELECT  DATE_FORMAT(STR_TO_DATE(create_time ,'%Y-%m-%d'),'%Y-%m-%d') AS create_time FROM kqzljg ORDER BY create_time ASC
+</select>
+
+  <select id="tongjiPm" resultMap="BaseResultMap" >
+		SELECT  pm25 FROM kqzljg ORDER BY create_time ASC
+   </select>
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Kqzljg">
+    select 
+    *
+    from  KQZLJG
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="kongqileixing != null and kongqileixing != '' ">
+				AND kongqileixing = #{kongqileixing}
+			</if>   
+			<if test="yangqi != null and yangqi != '' ">
+				AND yangqi = #{yangqi}
+			</if>   
+			<if test="eryanghuatan != null and eryanghuatan != '' ">
+				AND eryanghuatan = #{eryanghuatan}
+			</if>   
+			<if test="danqi != null and danqi != '' ">
+				AND danqi = #{danqi}
+			</if>   
+			<if test="xiyouqiti != null and xiyouqiti != '' ">
+				AND xiyouqiti = #{xiyouqiti}
+			</if>   
+			<if test="chouyang != null and chouyang != '' ">
+				AND chouyang = #{chouyang}
+			</if>   
+			<if test="yiyanghuadan != null and yiyanghuadan != '' ">
+				AND yiyanghuadan = #{yiyanghuadan}
+			</if>   
+			<if test="shuizhengqi != null and shuizhengqi != '' ">
+				AND shuizhengqi = #{shuizhengqi}
+			</if>   
+			<if test="pm25 != null and pm25 != '' ">
+				AND pm25 = #{pm25}
+			</if>   
+			<if test="pm25Val != null and pm25Val != '' ">
+				AND pm25_val = #{pm25Val}
+			</if>   
+			<if test="pm10Year != null and pm10Year != '' ">
+				AND pm10_year = #{pm10Year}
+			</if>   
+			<if test="pm10Hour != null and pm10Hour != '' ">
+				AND pm10_hour = #{pm10Hour}
+			</if>   
+			<if test="xiyanliang != null and xiyanliang != '' ">
+				AND xiyanliang = #{xiyanliang}
+			</if>   
+			<if test="mei != null and mei != '' ">
+				AND mei = #{mei}
+			</if>   
+			<if test="tianranqi != null and tianranqi != '' ">
+				AND tianranqi = #{tianranqi}
+			</if>   
+			<if test="muchai != null and muchai != '' ">
+				AND muchai = #{muchai}
+			</if>   
+			<if test="dian != null and dian != '' ">
+				AND dian = #{dian}
+			</if>   
+			<if test="qita != null and qita != '' ">
+				AND qita = #{qita}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  KQZLJG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Kqzljg"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  KQZLJG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="kongqileixing != null and kongqileixing != ''" >
+      	            kongqileixing ,
+      	       </if>
+			 <if test="yangqi != null and yangqi != ''" >
+      	            yangqi ,
+      	       </if>
+			 <if test="eryanghuatan != null and eryanghuatan != ''" >
+      	            eryanghuatan ,
+      	       </if>
+			 <if test="danqi != null and danqi != ''" >
+      	            danqi ,
+      	       </if>
+			 <if test="xiyouqiti != null and xiyouqiti != ''" >
+      	            xiyouqiti ,
+      	       </if>
+			 <if test="chouyang != null and chouyang != ''" >
+      	            chouyang ,
+      	       </if>
+			 <if test="yiyanghuadan != null and yiyanghuadan != ''" >
+      	            yiyanghuadan ,
+      	       </if>
+			 <if test="shuizhengqi != null and shuizhengqi != ''" >
+      	            shuizhengqi ,
+      	       </if>
+			 <if test="pm25 != null and pm25 != ''" >
+      	            pm25 ,
+      	       </if>
+			 <if test="pm25Val != null and pm25Val != ''" >
+      	            pm25_val ,
+      	       </if>
+			 <if test="pm10Year != null and pm10Year != ''" >
+      	            pm10_year ,
+      	       </if>
+			 <if test="pm10Hour != null and pm10Hour != ''" >
+      	            pm10_hour ,
+      	       </if>
+			 <if test="xiyanliang != null and xiyanliang != ''" >
+      	            xiyanliang ,
+      	       </if>
+			 <if test="mei != null and mei != ''" >
+      	            mei ,
+      	       </if>
+			 <if test="tianranqi != null and tianranqi != ''" >
+      	            tianranqi ,
+      	       </if>
+			 <if test="muchai != null and muchai != ''" >
+      	            muchai ,
+      	       </if>
+			 <if test="dian != null and dian != ''" >
+      	            dian ,
+      	       </if>
+			 <if test="qita != null and qita != ''" >
+      	            qita ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="kongqileixing != null and kongqileixing != ''" >
+      	            #{kongqileixing},
+      	       </if>
+			
+			
+			 <if test="yangqi != null and yangqi != ''" >
+      	            #{yangqi},
+      	       </if>
+			
+			
+			 <if test="eryanghuatan != null and eryanghuatan != ''" >
+      	            #{eryanghuatan},
+      	       </if>
+			
+			
+			 <if test="danqi != null and danqi != ''" >
+      	            #{danqi},
+      	       </if>
+			
+			
+			 <if test="xiyouqiti != null and xiyouqiti != ''" >
+      	            #{xiyouqiti},
+      	       </if>
+			
+			
+			 <if test="chouyang != null and chouyang != ''" >
+      	            #{chouyang},
+      	       </if>
+			
+			
+			 <if test="yiyanghuadan != null and yiyanghuadan != ''" >
+      	            #{yiyanghuadan},
+      	       </if>
+			
+			
+			 <if test="shuizhengqi != null and shuizhengqi != ''" >
+      	            #{shuizhengqi},
+      	       </if>
+			
+			
+			 <if test="pm25 != null and pm25 != ''" >
+      	            #{pm25},
+      	       </if>
+			
+			
+			 <if test="pm25Val != null and pm25Val != ''" >
+      	            #{pm25Val},
+      	       </if>
+			
+			
+			 <if test="pm10Year != null and pm10Year != ''" >
+      	            #{pm10Year},
+      	       </if>
+			
+			
+			 <if test="pm10Hour != null and pm10Hour != ''" >
+      	            #{pm10Hour},
+      	       </if>
+			
+			
+			 <if test="xiyanliang != null and xiyanliang != ''" >
+      	            #{xiyanliang},
+      	       </if>
+			
+			
+			 <if test="mei != null and mei != ''" >
+      	            #{mei},
+      	       </if>
+			
+			
+			 <if test="tianranqi != null and tianranqi != ''" >
+      	            #{tianranqi},
+      	       </if>
+			
+			
+			 <if test="muchai != null and muchai != ''" >
+      	            #{muchai},
+      	       </if>
+			
+			
+			 <if test="dian != null and dian != ''" >
+      	            #{dian},
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+      	            #{qita},
+      	       </if>
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Kqzljg" >
+    update  KQZLJG
+    <set >
+			
+			
+			
+			 <if test="kongqileixing != null and kongqileixing != ''" >
+					kongqileixing   = #{kongqileixing },
+      	       </if>
+			
+			
+			 <if test="yangqi != null and yangqi != ''" >
+					yangqi   = #{yangqi },
+      	       </if>
+			
+			
+			 <if test="eryanghuatan != null and eryanghuatan != ''" >
+					eryanghuatan   = #{eryanghuatan },
+      	       </if>
+			
+			
+			 <if test="danqi != null and danqi != ''" >
+					danqi   = #{danqi },
+      	       </if>
+			
+			
+			 <if test="xiyouqiti != null and xiyouqiti != ''" >
+					xiyouqiti   = #{xiyouqiti },
+      	       </if>
+			
+			
+			 <if test="chouyang != null and chouyang != ''" >
+					chouyang   = #{chouyang },
+      	       </if>
+			
+			
+			 <if test="yiyanghuadan != null and yiyanghuadan != ''" >
+					yiyanghuadan   = #{yiyanghuadan },
+      	       </if>
+			
+			
+			 <if test="shuizhengqi != null and shuizhengqi != ''" >
+					shuizhengqi   = #{shuizhengqi },
+      	       </if>
+			
+			
+			 <if test="pm25 != null and pm25 != ''" >
+					pm25   = #{pm25 },
+      	       </if>
+			
+			
+			 <if test="pm25Val != null and pm25Val != ''" >
+					pm25_val   = #{pm25Val },
+      	       </if>
+			
+			
+			 <if test="pm10Year != null and pm10Year != ''" >
+					pm10_year   = #{pm10Year },
+      	       </if>
+			
+			
+			 <if test="pm10Hour != null and pm10Hour != ''" >
+					pm10_hour   = #{pm10Hour },
+      	       </if>
+			
+			
+			 <if test="xiyanliang != null and xiyanliang != ''" >
+					xiyanliang   = #{xiyanliang },
+      	       </if>
+			
+			
+			 <if test="mei != null and mei != ''" >
+					mei   = #{mei },
+      	       </if>
+			
+			
+			 <if test="tianranqi != null and tianranqi != ''" >
+					tianranqi   = #{tianranqi },
+      	       </if>
+			
+			
+			 <if test="muchai != null and muchai != ''" >
+					muchai   = #{muchai },
+      	       </if>
+			
+			
+			 <if test="dian != null and dian != ''" >
+					dian   = #{dian },
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+					qita   = #{qita },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

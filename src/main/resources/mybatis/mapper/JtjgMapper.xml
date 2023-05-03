@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.JtjgMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Jtjg" >
+  
+		    <result column="id" property="id" />
+		    <result column="jiaotongleixing" property="jiaotongleixing" />
+		    <result column="bianlidu" property="bianlidu" />
+		    <result column="lumianzhuangkuang" property="lumianzhuangkuang" />
+		    <result column="xuexiao" property="xuexiao" />
+		    <result column="yiliao" property="yiliao" />
+		    <result column="shuili" property="shuili" />
+		    <result column="dianzhan" property="dianzhan" />
+		    <result column="jinrongruwu" property="jinrongruwu" />
+		    <result column="gongjiaozhan" property="gongjiaozhan" />
+		    <result column="jianshenqicai" property="jianshenqicai" />
+		    <result column="wenhuazhongxin" property="wenhuazhongxin" />
+		    <result column="qita" property="qita" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  JTJG
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+    <select id="tongji" resultType="map" >
+  
+  SELECT IFNULL(SUM(xuexiao),0) AS value , '学校' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(yiliao),0) AS value , '医疗站' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(shuili),0) AS value , '水利站' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(dianzhan),0) AS value , '电站' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(jinrongruwu),0) AS value , '金融服务' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(gongjiaozhan),0) AS value , '公交站' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(jianshenqicai),0) AS value , '建生器材' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(wenhuazhongxin),0) AS value , '文化中心' AS name  FROM jtjg 
+UNION ALL 
+SELECT IFNULL(SUM(qita),0) AS value , '其他' AS name  FROM jtjg 
+
+  </select>
+  
+  
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Jtjg">
+    select 
+    *
+    from  JTJG
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="jiaotongleixing != null and jiaotongleixing != '' ">
+				AND jiaotongleixing = #{jiaotongleixing}
+			</if>   
+			<if test="bianlidu != null and bianlidu != '' ">
+				AND bianlidu = #{bianlidu}
+			</if>   
+			<if test="lumianzhuangkuang != null and lumianzhuangkuang != '' ">
+				AND lumianzhuangkuang = #{lumianzhuangkuang}
+			</if>   
+			<if test="xuexiao != null and xuexiao != '' ">
+				AND xuexiao = #{xuexiao}
+			</if>   
+			<if test="yiliao != null and yiliao != '' ">
+				AND yiliao = #{yiliao}
+			</if>   
+			<if test="shuili != null and shuili != '' ">
+				AND shuili = #{shuili}
+			</if>   
+			<if test="dianzhan != null and dianzhan != '' ">
+				AND dianzhan = #{dianzhan}
+			</if>   
+			<if test="jinrongruwu != null and jinrongruwu != '' ">
+				AND jinrongruwu = #{jinrongruwu}
+			</if>   
+			<if test="gongjiaozhan != null and gongjiaozhan != '' ">
+				AND gongjiaozhan = #{gongjiaozhan}
+			</if>   
+			<if test="jianshenqicai != null and jianshenqicai != '' ">
+				AND jianshenqicai = #{jianshenqicai}
+			</if>   
+			<if test="wenhuazhongxin != null and wenhuazhongxin != '' ">
+				AND wenhuazhongxin = #{wenhuazhongxin}
+			</if>   
+			<if test="qita != null and qita != '' ">
+				AND qita = #{qita}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  JTJG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Jtjg"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  JTJG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="jiaotongleixing != null and jiaotongleixing != ''" >
+      	            jiaotongleixing ,
+      	       </if>
+			 <if test="bianlidu != null and bianlidu != ''" >
+      	            bianlidu ,
+      	       </if>
+			 <if test="lumianzhuangkuang != null and lumianzhuangkuang != ''" >
+      	            lumianzhuangkuang ,
+      	       </if>
+			 <if test="xuexiao != null and xuexiao != ''" >
+      	            xuexiao ,
+      	       </if>
+			 <if test="yiliao != null and yiliao != ''" >
+      	            yiliao ,
+      	       </if>
+			 <if test="shuili != null and shuili != ''" >
+      	            shuili ,
+      	       </if>
+			 <if test="dianzhan != null and dianzhan != ''" >
+      	            dianzhan ,
+      	       </if>
+			 <if test="jinrongruwu != null and jinrongruwu != ''" >
+      	            jinrongruwu ,
+      	       </if>
+			 <if test="gongjiaozhan != null and gongjiaozhan != ''" >
+      	            gongjiaozhan ,
+      	       </if>
+			 <if test="jianshenqicai != null and jianshenqicai != ''" >
+      	            jianshenqicai ,
+      	       </if>
+			 <if test="wenhuazhongxin != null and wenhuazhongxin != ''" >
+      	            wenhuazhongxin ,
+      	       </if>
+			 <if test="qita != null and qita != ''" >
+      	            qita ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="jiaotongleixing != null and jiaotongleixing != ''" >
+      	            #{jiaotongleixing},
+      	       </if>
+			
+			
+			 <if test="bianlidu != null and bianlidu != ''" >
+      	            #{bianlidu},
+      	       </if>
+			
+			
+			 <if test="lumianzhuangkuang != null and lumianzhuangkuang != ''" >
+      	            #{lumianzhuangkuang},
+      	       </if>
+			
+			
+			 <if test="xuexiao != null and xuexiao != ''" >
+      	            #{xuexiao},
+      	       </if>
+			
+			
+			 <if test="yiliao != null and yiliao != ''" >
+      	            #{yiliao},
+      	       </if>
+			
+			
+			 <if test="shuili != null and shuili != ''" >
+      	            #{shuili},
+      	       </if>
+			
+			
+			 <if test="dianzhan != null and dianzhan != ''" >
+      	            #{dianzhan},
+      	       </if>
+			
+			
+			 <if test="jinrongruwu != null and jinrongruwu != ''" >
+      	            #{jinrongruwu},
+      	       </if>
+			
+			
+			 <if test="gongjiaozhan != null and gongjiaozhan != ''" >
+      	            #{gongjiaozhan},
+      	       </if>
+			
+			
+			 <if test="jianshenqicai != null and jianshenqicai != ''" >
+      	            #{jianshenqicai},
+      	       </if>
+			
+			
+			 <if test="wenhuazhongxin != null and wenhuazhongxin != ''" >
+      	            #{wenhuazhongxin},
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+      	            #{qita},
+      	       </if>
+			
+			sysdate()
+			
+			
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Jtjg" >
+    update  JTJG
+    <set >
+			
+			
+			
+			 <if test="jiaotongleixing != null and jiaotongleixing != ''" >
+					jiaotongleixing   = #{jiaotongleixing },
+      	       </if>
+			
+			
+			 <if test="bianlidu != null and bianlidu != ''" >
+					bianlidu   = #{bianlidu },
+      	       </if>
+			
+			
+			 <if test="lumianzhuangkuang != null and lumianzhuangkuang != ''" >
+					lumianzhuangkuang   = #{lumianzhuangkuang },
+      	       </if>
+			
+			
+			 <if test="xuexiao != null and xuexiao != ''" >
+					xuexiao   = #{xuexiao },
+      	       </if>
+			
+			
+			 <if test="yiliao != null and yiliao != ''" >
+					yiliao   = #{yiliao },
+      	       </if>
+			
+			
+			 <if test="shuili != null and shuili != ''" >
+					shuili   = #{shuili },
+      	       </if>
+			
+			
+			 <if test="dianzhan != null and dianzhan != ''" >
+					dianzhan   = #{dianzhan },
+      	       </if>
+			
+			
+			 <if test="jinrongruwu != null and jinrongruwu != ''" >
+					jinrongruwu   = #{jinrongruwu },
+      	       </if>
+			
+			
+			 <if test="gongjiaozhan != null and gongjiaozhan != ''" >
+					gongjiaozhan   = #{gongjiaozhan },
+      	       </if>
+			
+			
+			 <if test="jianshenqicai != null and jianshenqicai != ''" >
+					jianshenqicai   = #{jianshenqicai },
+      	       </if>
+			
+			
+			 <if test="wenhuazhongxin != null and wenhuazhongxin != ''" >
+					wenhuazhongxin   = #{wenhuazhongxin },
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+					qita   = #{qita },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

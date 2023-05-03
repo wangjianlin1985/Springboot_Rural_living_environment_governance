@@ -1,0 +1,60 @@
+
+spring:
+  application: 
+    name: fw
+    profiles: D:/profiles
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/renwen?useUnicode=true&characterEncoding=UTF-8&autoReconnect=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+    initial-size: 1
+    min-idle: 1
+    max-active: 100
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 'x'
+    test-while-idle: true 
+    test-on-borrow: false
+    test-on-return: false
+    pool-prepared-statements: true 
+    max-pool-prepared-statement-per-connection-size: 2
+    filters: stat,wall,log4j,config
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+   
+  
+
+
+
+server:
+  port: 8087
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 800
+    min-spare-threads: 30
+
+
+logging:
+  level:
+    org.springframework: WARN
+    org.spring.springboot.dao: debug
+    logging.level.com.lhz.project.mapper: debug
+
+
+
+mybatis:
+  typeAliasesPackage: com.lhz.project
+  mapperLocations: classpath:mybatis/**/*Mapper.xml
+  configLocation: classpath:mybatis/mybatis-config.xml
+  
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

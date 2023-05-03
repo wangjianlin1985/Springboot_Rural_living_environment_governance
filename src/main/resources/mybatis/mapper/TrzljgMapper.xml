@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.TrzljgMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Trzljg" >
+  
+		    <result column="id" property="id" />
+		    <result column="tudileixing" property="tudileixing" />
+		    <result column="tudidengji" property="tudidengji" />
+		    <result column="ph" property="ph" />
+		    <result column="shuifen" property="shuifen" />
+		    <result column="yanglizi" property="yanglizi" />
+		    <result column="suandu" property="suandu" />
+		    <result column="rongzhong" property="rongzhong" />
+		    <result column="midu" property="midu" />
+		    <result column="lidu" property="lidu" />
+		    <result column="huifafen" property="huifafen" />
+		    <result column="fuhuawu" property="fuhuawu" />
+		    <result column="qinghuawu" property="qinghuawu" />
+		    <result column="andan" property="andan" />
+		    <result column="quandan" property="quandan" />
+		    <result column="quanlin" property="quanlin" />
+		    <result column="quanjia" property="quanjia" />
+		    <result column="xiaosuanyandan" property="xiaosuanyandan" />
+		    <result column="quanyanliang" property="quanyanliang" />
+		    <result column="liusuangen" property="liusuangen" />
+		    <result column="youxiaolin" property="youxiaolin" />
+		    <result column="youxiaogui" property="youxiaogui" />
+		    <result column="youxiaotie" property="youxiaotie" />
+		    <result column="youxiaopeng" property="youxiaopeng" />
+		    <result column="suxiaojia" property="suxiaojia" />
+		    <result column="youjizhi" property="youjizhi" />
+		    <result column="qian" property="qian" />
+		    <result column="ge" property="ge" />
+		    <result column="gong" property="gong" />
+		    <result column="luo" property="luo" />
+		    <result column="ti" property="ti" />
+		    <result column="pi" property="pi" />
+		    <result column="shen" property="shen" />
+		    <result column="tong" property="tong" />
+		    <result column="ni" property="ni" />
+		    <result column="yin" property="yin" />
+		    <result column="xin" property="xin" />
+		    <result column="meng" property="meng" />
+		    <result column="lv" property="lv" />
+		    <result column="li" property="li" />
+		    <result column="ba" property="ba" />
+		    <result column="tai" property="tai" />
+		    <result column="xi" property="xi" />
+		    <result column="peng" property="peng" />
+		    <result column="si" property="si" />
+		    <result column="gu" property="gu" />
+		    <result column="mu" property="mu" />
+		    <result column="tu" property="tu" />
+		    <result column="you" property="you" />
+		    <result column="gong2" property="gong2" />
+		    <result column="bi" property="bi" />
+		    <result column="jia" property="jia" />
+		    <result column="zhe" property="zhe" />
+		    <result column="di" property="di" />
+		    <result column="tuo" property="tuo" />
+		    <result column="ludaiting" property="ludaiting" />
+		    <result column="huifayoujiwu" property="huifayoujiwu" />
+		    <result column="huifashiyou" property="huifashiyou" />
+		    <result column="duolulianben" property="duolulianben" />
+		    <result column="duohuanfangting" property="duohuanfangting" />
+		    <result column="tiquluhuawu" property="tiquluhuawu" />
+		    <result column="banhuifayoujiwu" property="banhuifayoujiwu" />
+		    <result column="youjilunongyao" property="youjilunongyao" />
+		    <result column="youjilinnongyao" property="youjilinnongyao" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  TRZLJG
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+  <select id="tongji" resultType="map">
+SELECT IFNULL(SUM(ph+shuifen+yanglizi),0) AS value , '耕地土壤质量监管' AS name  FROM trzljg 
+WHERE  tudileixing = '耕地土壤质量监管'
+UNION ALL 
+SELECT IFNULL(SUM(ph+shuifen+yanglizi),0) AS value , '绿化地土壤质量监管' AS name  FROM trzljg 
+WHERE  tudileixing = '绿化地土壤质量监管'
+UNION ALL 
+SELECT IFNULL(SUM(ph+shuifen+yanglizi),0) AS value , '沙土地土壤质量监管' AS name  FROM trzljg 
+WHERE  tudileixing = '沙土地土壤质量监管'
+  
+  </select>
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Trzljg">
+    select 
+    *
+    from  TRZLJG
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="tudileixing != null and tudileixing != '' ">
+				AND tudileixing = #{tudileixing}
+			</if>   
+			<if test="tudidengji != null and tudidengji != '' ">
+				AND tudidengji = #{tudidengji}
+			</if>   
+			<if test="ph != null and ph != '' ">
+				AND ph = #{ph}
+			</if>   
+			<if test="shuifen != null and shuifen != '' ">
+				AND shuifen = #{shuifen}
+			</if>   
+			<if test="yanglizi != null and yanglizi != '' ">
+				AND yanglizi = #{yanglizi}
+			</if>   
+			<if test="suandu != null and suandu != '' ">
+				AND suandu = #{suandu}
+			</if>   
+			<if test="rongzhong != null and rongzhong != '' ">
+				AND rongzhong = #{rongzhong}
+			</if>   
+			<if test="midu != null and midu != '' ">
+				AND midu = #{midu}
+			</if>   
+			<if test="lidu != null and lidu != '' ">
+				AND lidu = #{lidu}
+			</if>   
+			<if test="huifafen != null and huifafen != '' ">
+				AND huifafen = #{huifafen}
+			</if>   
+			<if test="fuhuawu != null and fuhuawu != '' ">
+				AND fuhuawu = #{fuhuawu}
+			</if>   
+			<if test="qinghuawu != null and qinghuawu != '' ">
+				AND qinghuawu = #{qinghuawu}
+			</if>   
+			<if test="andan != null and andan != '' ">
+				AND andan = #{andan}
+			</if>   
+			<if test="quandan != null and quandan != '' ">
+				AND quandan = #{quandan}
+			</if>   
+			<if test="quanlin != null and quanlin != '' ">
+				AND quanlin = #{quanlin}
+			</if>   
+			<if test="quanjia != null and quanjia != '' ">
+				AND quanjia = #{quanjia}
+			</if>   
+			<if test="xiaosuanyandan != null and xiaosuanyandan != '' ">
+				AND xiaosuanyandan = #{xiaosuanyandan}
+			</if>   
+			<if test="quanyanliang != null and quanyanliang != '' ">
+				AND quanyanliang = #{quanyanliang}
+			</if>   
+			<if test="liusuangen != null and liusuangen != '' ">
+				AND liusuangen = #{liusuangen}
+			</if>   
+			<if test="youxiaolin != null and youxiaolin != '' ">
+				AND youxiaolin = #{youxiaolin}
+			</if>   
+			<if test="youxiaogui != null and youxiaogui != '' ">
+				AND youxiaogui = #{youxiaogui}
+			</if>   
+			<if test="youxiaotie != null and youxiaotie != '' ">
+				AND youxiaotie = #{youxiaotie}
+			</if>   
+			<if test="youxiaopeng != null and youxiaopeng != '' ">
+				AND youxiaopeng = #{youxiaopeng}
+			</if>   
+			<if test="suxiaojia != null and suxiaojia != '' ">
+				AND suxiaojia = #{suxiaojia}
+			</if>   
+			<if test="youjizhi != null and youjizhi != '' ">
+				AND youjizhi = #{youjizhi}
+			</if>   
+			<if test="qian != null and qian != '' ">
+				AND qian = #{qian}
+			</if>   
+			<if test="ge != null and ge != '' ">
+				AND ge = #{ge}
+			</if>   
+			<if test="gong != null and gong != '' ">
+				AND gong = #{gong}
+			</if>   
+			<if test="luo != null and luo != '' ">
+				AND luo = #{luo}
+			</if>   
+			<if test="ti != null and ti != '' ">
+				AND ti = #{ti}
+			</if>   
+			<if test="pi != null and pi != '' ">
+				AND pi = #{pi}
+			</if>   
+			<if test="shen != null and shen != '' ">
+				AND shen = #{shen}
+			</if>   
+			<if test="tong != null and tong != '' ">
+				AND tong = #{tong}
+			</if>   
+			<if test="ni != null and ni != '' ">
+				AND ni = #{ni}
+			</if>   
+			<if test="yin != null and yin != '' ">
+				AND yin = #{yin}
+			</if>   
+			<if test="xin != null and xin != '' ">
+				AND xin = #{xin}
+			</if>   
+			<if test="meng != null and meng != '' ">
+				AND meng = #{meng}
+			</if>   
+			<if test="lv != null and lv != '' ">
+				AND lv = #{lv}
+			</if>   
+			<if test="li != null and li != '' ">
+				AND li = #{li}
+			</if>   
+			<if test="ba != null and ba != '' ">
+				AND ba = #{ba}
+			</if>   
+			<if test="tai != null and tai != '' ">
+				AND tai = #{tai}
+			</if>   
+			<if test="xi != null and xi != '' ">
+				AND xi = #{xi}
+			</if>   
+			<if test="peng != null and peng != '' ">
+				AND peng = #{peng}
+			</if>   
+			<if test="si != null and si != '' ">
+				AND si = #{si}
+			</if>   
+			<if test="gu != null and gu != '' ">
+				AND gu = #{gu}
+			</if>   
+			<if test="mu != null and mu != '' ">
+				AND mu = #{mu}
+			</if>   
+			<if test="tu != null and tu != '' ">
+				AND tu = #{tu}
+			</if>   
+			<if test="you != null and you != '' ">
+				AND you = #{you}
+			</if>   
+			<if test="gong2 != null and gong2 != '' ">
+				AND gong2 = #{gong2}
+			</if>   
+			<if test="bi != null and bi != '' ">
+				AND bi = #{bi}
+			</if>   
+			<if test="jia != null and jia != '' ">
+				AND jia = #{jia}
+			</if>   
+			<if test="zhe != null and zhe != '' ">
+				AND zhe = #{zhe}
+			</if>   
+			<if test="di != null and di != '' ">
+				AND di = #{di}
+			</if>   
+			<if test="tuo != null and tuo != '' ">
+				AND tuo = #{tuo}
+			</if>   
+			<if test="ludaiting != null and ludaiting != '' ">
+				AND ludaiting = #{ludaiting}
+			</if>   
+			<if test="huifayoujiwu != null and huifayoujiwu != '' ">
+				AND huifayoujiwu = #{huifayoujiwu}
+			</if>   
+			<if test="huifashiyou != null and huifashiyou != '' ">
+				AND huifashiyou = #{huifashiyou}
+			</if>   
+			<if test="duolulianben != null and duolulianben != '' ">
+				AND duolulianben = #{duolulianben}
+			</if>   
+			<if test="duohuanfangting != null and duohuanfangting != '' ">
+				AND duohuanfangting = #{duohuanfangting}
+			</if>   
+			<if test="tiquluhuawu != null and tiquluhuawu != '' ">
+				AND tiquluhuawu = #{tiquluhuawu}
+			</if>   
+			<if test="banhuifayoujiwu != null and banhuifayoujiwu != '' ">
+				AND banhuifayoujiwu = #{banhuifayoujiwu}
+			</if>   
+			<if test="youjilunongyao != null and youjilunongyao != '' ">
+				AND youjilunongyao = #{youjilunongyao}
+			</if>   
+			<if test="youjilinnongyao != null and youjilinnongyao != '' ">
+				AND youjilinnongyao = #{youjilinnongyao}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  TRZLJG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Trzljg"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  TRZLJG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="tudileixing != null and tudileixing != ''" >
+      	            tudileixing ,
+      	       </if>
+			 <if test="tudidengji != null and tudidengji != ''" >
+      	            tudidengji ,
+      	       </if>
+			 <if test="ph != null and ph != ''" >
+      	            ph ,
+      	       </if>
+			 <if test="shuifen != null and shuifen != ''" >
+      	            shuifen ,
+      	       </if>
+			 <if test="yanglizi != null and yanglizi != ''" >
+      	            yanglizi ,
+      	       </if>
+			 <if test="suandu != null and suandu != ''" >
+      	            suandu ,
+      	       </if>
+			 <if test="rongzhong != null and rongzhong != ''" >
+      	            rongzhong ,
+      	       </if>
+			 <if test="midu != null and midu != ''" >
+      	            midu ,
+      	       </if>
+			 <if test="lidu != null and lidu != ''" >
+      	            lidu ,
+      	       </if>
+			 <if test="huifafen != null and huifafen != ''" >
+      	            huifafen ,
+      	       </if>
+			 <if test="fuhuawu != null and fuhuawu != ''" >
+      	            fuhuawu ,
+      	       </if>
+			 <if test="qinghuawu != null and qinghuawu != ''" >
+      	            qinghuawu ,
+      	       </if>
+			 <if test="andan != null and andan != ''" >
+      	            andan ,
+      	       </if>
+			 <if test="quandan != null and quandan != ''" >
+      	            quandan ,
+      	       </if>
+			 <if test="quanlin != null and quanlin != ''" >
+      	            quanlin ,
+      	       </if>
+			 <if test="quanjia != null and quanjia != ''" >
+      	            quanjia ,
+      	       </if>
+			 <if test="xiaosuanyandan != null and xiaosuanyandan != ''" >
+      	            xiaosuanyandan ,
+      	       </if>
+			 <if test="quanyanliang != null and quanyanliang != ''" >
+      	            quanyanliang ,
+      	       </if>
+			 <if test="liusuangen != null and liusuangen != ''" >
+      	            liusuangen ,
+      	       </if>
+			 <if test="youxiaolin != null and youxiaolin != ''" >
+      	            youxiaolin ,
+      	       </if>
+			 <if test="youxiaogui != null and youxiaogui != ''" >
+      	            youxiaogui ,
+      	       </if>
+			 <if test="youxiaotie != null and youxiaotie != ''" >
+      	            youxiaotie ,
+      	       </if>
+			 <if test="youxiaopeng != null and youxiaopeng != ''" >
+      	            youxiaopeng ,
+      	       </if>
+			 <if test="suxiaojia != null and suxiaojia != ''" >
+      	            suxiaojia ,
+      	       </if>
+			 <if test="youjizhi != null and youjizhi != ''" >
+      	            youjizhi ,
+      	       </if>
+			 <if test="qian != null and qian != ''" >
+      	            qian ,
+      	       </if>
+			 <if test="ge != null and ge != ''" >
+      	            ge ,
+      	       </if>
+			 <if test="gong != null and gong != ''" >
+      	            gong ,
+      	       </if>
+			 <if test="luo != null and luo != ''" >
+      	            luo ,
+      	       </if>
+			 <if test="ti != null and ti != ''" >
+      	            ti ,
+      	       </if>
+			 <if test="pi != null and pi != ''" >
+      	            pi ,
+      	       </if>
+			 <if test="shen != null and shen != ''" >
+      	            shen ,
+      	       </if>
+			 <if test="tong != null and tong != ''" >
+      	            tong ,
+      	       </if>
+			 <if test="ni != null and ni != ''" >
+      	            ni ,
+      	       </if>
+			 <if test="yin != null and yin != ''" >
+      	            yin ,
+      	       </if>
+			 <if test="xin != null and xin != ''" >
+      	            xin ,
+      	       </if>
+			 <if test="meng != null and meng != ''" >
+      	            meng ,
+      	       </if>
+			 <if test="lv != null and lv != ''" >
+      	            lv ,
+      	       </if>
+			 <if test="li != null and li != ''" >
+      	            li ,
+      	       </if>
+			 <if test="ba != null and ba != ''" >
+      	            ba ,
+      	       </if>
+			 <if test="tai != null and tai != ''" >
+      	            tai ,
+      	       </if>
+			 <if test="xi != null and xi != ''" >
+      	            xi ,
+      	       </if>
+			 <if test="peng != null and peng != ''" >
+      	            peng ,
+      	       </if>
+			 <if test="si != null and si != ''" >
+      	            si ,
+      	       </if>
+			 <if test="gu != null and gu != ''" >
+      	            gu ,
+      	       </if>
+			 <if test="mu != null and mu != ''" >
+      	            mu ,
+      	       </if>
+			 <if test="tu != null and tu != ''" >
+      	            tu ,
+      	       </if>
+			 <if test="you != null and you != ''" >
+      	            you ,
+      	       </if>
+			 <if test="gong2 != null and gong2 != ''" >
+      	            gong2 ,
+      	       </if>
+			 <if test="bi != null and bi != ''" >
+      	            bi ,
+      	       </if>
+			 <if test="jia != null and jia != ''" >
+      	            jia ,
+      	       </if>
+			 <if test="zhe != null and zhe != ''" >
+      	            zhe ,
+      	       </if>
+			 <if test="di != null and di != ''" >
+      	            di ,
+      	       </if>
+			 <if test="tuo != null and tuo != ''" >
+      	            tuo ,
+      	       </if>
+			 <if test="ludaiting != null and ludaiting != ''" >
+      	            ludaiting ,
+      	       </if>
+			 <if test="huifayoujiwu != null and huifayoujiwu != ''" >
+      	            huifayoujiwu ,
+      	       </if>
+			 <if test="huifashiyou != null and huifashiyou != ''" >
+      	            huifashiyou ,
+      	       </if>
+			 <if test="duolulianben != null and duolulianben != ''" >
+      	            duolulianben ,
+      	       </if>
+			 <if test="duohuanfangting != null and duohuanfangting != ''" >
+      	            duohuanfangting ,
+      	       </if>
+			 <if test="tiquluhuawu != null and tiquluhuawu != ''" >
+      	            tiquluhuawu ,
+      	       </if>
+			 <if test="banhuifayoujiwu != null and banhuifayoujiwu != ''" >
+      	            banhuifayoujiwu ,
+      	       </if>
+			 <if test="youjilunongyao != null and youjilunongyao != ''" >
+      	            youjilunongyao ,
+      	       </if>
+			 <if test="youjilinnongyao != null and youjilinnongyao != ''" >
+      	            youjilinnongyao ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="tudileixing != null and tudileixing != ''" >
+      	            #{tudileixing},
+      	       </if>
+			
+			
+			 <if test="tudidengji != null and tudidengji != ''" >
+      	            #{tudidengji},
+      	       </if>
+			
+			
+			 <if test="ph != null and ph != ''" >
+      	            #{ph},
+      	       </if>
+			
+			
+			 <if test="shuifen != null and shuifen != ''" >
+      	            #{shuifen},
+      	       </if>
+			
+			
+			 <if test="yanglizi != null and yanglizi != ''" >
+      	            #{yanglizi},
+      	       </if>
+			
+			
+			 <if test="suandu != null and suandu != ''" >
+      	            #{suandu},
+      	       </if>
+			
+			
+			 <if test="rongzhong != null and rongzhong != ''" >
+      	            #{rongzhong},
+      	       </if>
+			
+			
+			 <if test="midu != null and midu != ''" >
+      	            #{midu},
+      	       </if>
+			
+			
+			 <if test="lidu != null and lidu != ''" >
+      	            #{lidu},
+      	       </if>
+			
+			
+			 <if test="huifafen != null and huifafen != ''" >
+      	            #{huifafen},
+      	       </if>
+			
+			
+			 <if test="fuhuawu != null and fuhuawu != ''" >
+      	            #{fuhuawu},
+      	       </if>
+			
+			
+			 <if test="qinghuawu != null and qinghuawu != ''" >
+      	            #{qinghuawu},
+      	       </if>
+			
+			
+			 <if test="andan != null and andan != ''" >
+      	            #{andan},
+      	       </if>
+			
+			
+			 <if test="quandan != null and quandan != ''" >
+      	            #{quandan},
+      	       </if>
+			
+			
+			 <if test="quanlin != null and quanlin != ''" >
+      	            #{quanlin},
+      	       </if>
+			
+			
+			 <if test="quanjia != null and quanjia != ''" >
+      	            #{quanjia},
+      	       </if>
+			
+			
+			 <if test="xiaosuanyandan != null and xiaosuanyandan != ''" >
+      	            #{xiaosuanyandan},
+      	       </if>
+			
+			
+			 <if test="quanyanliang != null and quanyanliang != ''" >
+      	            #{quanyanliang},
+      	       </if>
+			
+			
+			 <if test="liusuangen != null and liusuangen != ''" >
+      	            #{liusuangen},
+      	       </if>
+			
+			
+			 <if test="youxiaolin != null and youxiaolin != ''" >
+      	            #{youxiaolin},
+      	       </if>
+			
+			
+			 <if test="youxiaogui != null and youxiaogui != ''" >
+      	            #{youxiaogui},
+      	       </if>
+			
+			
+			 <if test="youxiaotie != null and youxiaotie != ''" >
+      	            #{youxiaotie},
+      	       </if>
+			
+			
+			 <if test="youxiaopeng != null and youxiaopeng != ''" >
+      	            #{youxiaopeng},
+      	       </if>
+			
+			
+			 <if test="suxiaojia != null and suxiaojia != ''" >
+      	            #{suxiaojia},
+      	       </if>
+			
+			
+			 <if test="youjizhi != null and youjizhi != ''" >
+      	            #{youjizhi},
+      	       </if>
+			
+			
+			 <if test="qian != null and qian != ''" >
+      	            #{qian},
+      	       </if>
+			
+			
+			 <if test="ge != null and ge != ''" >
+      	            #{ge},
+      	       </if>
+			
+			
+			 <if test="gong != null and gong != ''" >
+      	            #{gong},
+      	       </if>
+			
+			
+			 <if test="luo != null and luo != ''" >
+      	            #{luo},
+      	       </if>
+			
+			
+			 <if test="ti != null and ti != ''" >
+      	            #{ti},
+      	       </if>
+			
+			
+			 <if test="pi != null and pi != ''" >
+      	            #{pi},
+      	       </if>
+			
+			
+			 <if test="shen != null and shen != ''" >
+      	            #{shen},
+      	       </if>
+			
+			
+			 <if test="tong != null and tong != ''" >
+      	            #{tong},
+      	       </if>
+			
+			
+			 <if test="ni != null and ni != ''" >
+      	            #{ni},
+      	       </if>
+			
+			
+			 <if test="yin != null and yin != ''" >
+      	            #{yin},
+      	       </if>
+			
+			
+			 <if test="xin != null and xin != ''" >
+      	            #{xin},
+      	       </if>
+			
+			
+			 <if test="meng != null and meng != ''" >
+      	            #{meng},
+      	       </if>
+			
+			
+			 <if test="lv != null and lv != ''" >
+      	            #{lv},
+      	       </if>
+			
+			
+			 <if test="li != null and li != ''" >
+      	            #{li},
+      	       </if>
+			
+			
+			 <if test="ba != null and ba != ''" >
+      	            #{ba},
+      	       </if>
+			
+			
+			 <if test="tai != null and tai != ''" >
+      	            #{tai},
+      	       </if>
+			
+			
+			 <if test="xi != null and xi != ''" >
+      	            #{xi},
+      	       </if>
+			
+			
+			 <if test="peng != null and peng != ''" >
+      	            #{peng},
+      	       </if>
+			
+			
+			 <if test="si != null and si != ''" >
+      	            #{si},
+      	       </if>
+			
+			
+			 <if test="gu != null and gu != ''" >
+      	            #{gu},
+      	       </if>
+			
+			
+			 <if test="mu != null and mu != ''" >
+      	            #{mu},
+      	       </if>
+			
+			
+			 <if test="tu != null and tu != ''" >
+      	            #{tu},
+      	       </if>
+			
+			
+			 <if test="you != null and you != ''" >
+      	            #{you},
+      	       </if>
+			
+			
+			 <if test="gong2 != null and gong2 != ''" >
+      	            #{gong2},
+      	       </if>
+			
+			
+			 <if test="bi != null and bi != ''" >
+      	            #{bi},
+      	       </if>
+			
+			
+			 <if test="jia != null and jia != ''" >
+      	            #{jia},
+      	       </if>
+			
+			
+			 <if test="zhe != null and zhe != ''" >
+      	            #{zhe},
+      	       </if>
+			
+			
+			 <if test="di != null and di != ''" >
+      	            #{di},
+      	       </if>
+			
+			
+			 <if test="tuo != null and tuo != ''" >
+      	            #{tuo},
+      	       </if>
+			
+			
+			 <if test="ludaiting != null and ludaiting != ''" >
+      	            #{ludaiting},
+      	       </if>
+			
+			
+			 <if test="huifayoujiwu != null and huifayoujiwu != ''" >
+      	            #{huifayoujiwu},
+      	       </if>
+			
+			
+			 <if test="huifashiyou != null and huifashiyou != ''" >
+      	            #{huifashiyou},
+      	       </if>
+			
+			
+			 <if test="duolulianben != null and duolulianben != ''" >
+      	            #{duolulianben},
+      	       </if>
+			
+			
+			 <if test="duohuanfangting != null and duohuanfangting != ''" >
+      	            #{duohuanfangting},
+      	       </if>
+			
+			
+			 <if test="tiquluhuawu != null and tiquluhuawu != ''" >
+      	            #{tiquluhuawu},
+      	       </if>
+			
+			
+			 <if test="banhuifayoujiwu != null and banhuifayoujiwu != ''" >
+      	            #{banhuifayoujiwu},
+      	       </if>
+			
+			
+			 <if test="youjilunongyao != null and youjilunongyao != ''" >
+      	            #{youjilunongyao},
+      	       </if>
+			
+			
+			 <if test="youjilinnongyao != null and youjilinnongyao != ''" >
+      	            #{youjilinnongyao},
+      	       </if>
+			
+			
+			sysdate()
+			
+			
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Trzljg" >
+    update  TRZLJG
+    <set >
+			
+			
+			
+			 <if test="tudileixing != null and tudileixing != ''" >
+					tudileixing   = #{tudileixing },
+      	       </if>
+			
+			
+			 <if test="tudidengji != null and tudidengji != ''" >
+					tudidengji   = #{tudidengji },
+      	       </if>
+			
+			
+			 <if test="ph != null and ph != ''" >
+					ph   = #{ph },
+      	       </if>
+			
+			
+			 <if test="shuifen != null and shuifen != ''" >
+					shuifen   = #{shuifen },
+      	       </if>
+			
+			
+			 <if test="yanglizi != null and yanglizi != ''" >
+					yanglizi   = #{yanglizi },
+      	       </if>
+			
+			
+			 <if test="suandu != null and suandu != ''" >
+					suandu   = #{suandu },
+      	       </if>
+			
+			
+			 <if test="rongzhong != null and rongzhong != ''" >
+					rongzhong   = #{rongzhong },
+      	       </if>
+			
+			
+			 <if test="midu != null and midu != ''" >
+					midu   = #{midu },
+      	       </if>
+			
+			
+			 <if test="lidu != null and lidu != ''" >
+					lidu   = #{lidu },
+      	       </if>
+			
+			
+			 <if test="huifafen != null and huifafen != ''" >
+					huifafen   = #{huifafen },
+      	       </if>
+			
+			
+			 <if test="fuhuawu != null and fuhuawu != ''" >
+					fuhuawu   = #{fuhuawu },
+      	       </if>
+			
+			
+			 <if test="qinghuawu != null and qinghuawu != ''" >
+					qinghuawu   = #{qinghuawu },
+      	       </if>
+			
+			
+			 <if test="andan != null and andan != ''" >
+					andan   = #{andan },
+      	       </if>
+			
+			
+			 <if test="quandan != null and quandan != ''" >
+					quandan   = #{quandan },
+      	       </if>
+			
+			
+			 <if test="quanlin != null and quanlin != ''" >
+					quanlin   = #{quanlin },
+      	       </if>
+			
+			
+			 <if test="quanjia != null and quanjia != ''" >
+					quanjia   = #{quanjia },
+      	       </if>
+			
+			
+			 <if test="xiaosuanyandan != null and xiaosuanyandan != ''" >
+					xiaosuanyandan   = #{xiaosuanyandan },
+      	       </if>
+			
+			
+			 <if test="quanyanliang != null and quanyanliang != ''" >
+					quanyanliang   = #{quanyanliang },
+      	       </if>
+			
+			
+			 <if test="liusuangen != null and liusuangen != ''" >
+					liusuangen   = #{liusuangen },
+      	       </if>
+			
+			
+			 <if test="youxiaolin != null and youxiaolin != ''" >
+					youxiaolin   = #{youxiaolin },
+      	       </if>
+			
+			
+			 <if test="youxiaogui != null and youxiaogui != ''" >
+					youxiaogui   = #{youxiaogui },
+      	       </if>
+			
+			
+			 <if test="youxiaotie != null and youxiaotie != ''" >
+					youxiaotie   = #{youxiaotie },
+      	       </if>
+			
+			
+			 <if test="youxiaopeng != null and youxiaopeng != ''" >
+					youxiaopeng   = #{youxiaopeng },
+      	       </if>
+			
+			
+			 <if test="suxiaojia != null and suxiaojia != ''" >
+					suxiaojia   = #{suxiaojia },
+      	       </if>
+			
+			
+			 <if test="youjizhi != null and youjizhi != ''" >
+					youjizhi   = #{youjizhi },
+      	       </if>
+			
+			
+			 <if test="qian != null and qian != ''" >
+					qian   = #{qian },
+      	       </if>
+			
+			
+			 <if test="ge != null and ge != ''" >
+					ge   = #{ge },
+      	       </if>
+			
+			
+			 <if test="gong != null and gong != ''" >
+					gong   = #{gong },
+      	       </if>
+			
+			
+			 <if test="luo != null and luo != ''" >
+					luo   = #{luo },
+      	       </if>
+			
+			
+			 <if test="ti != null and ti != ''" >
+					ti   = #{ti },
+      	       </if>
+			
+			
+			 <if test="pi != null and pi != ''" >
+					pi   = #{pi },
+      	       </if>
+			
+			
+			 <if test="shen != null and shen != ''" >
+					shen   = #{shen },
+      	       </if>
+			
+			
+			 <if test="tong != null and tong != ''" >
+					tong   = #{tong },
+      	       </if>
+			
+			
+			 <if test="ni != null and ni != ''" >
+					ni   = #{ni },
+      	       </if>
+			
+			
+			 <if test="yin != null and yin != ''" >
+					yin   = #{yin },
+      	       </if>
+			
+			
+			 <if test="xin != null and xin != ''" >
+					xin   = #{xin },
+      	       </if>
+			
+			
+			 <if test="meng != null and meng != ''" >
+					meng   = #{meng },
+      	       </if>
+			
+			
+			 <if test="lv != null and lv != ''" >
+					lv   = #{lv },
+      	       </if>
+			
+			
+			 <if test="li != null and li != ''" >
+					li   = #{li },
+      	       </if>
+			
+			
+			 <if test="ba != null and ba != ''" >
+					ba   = #{ba },
+      	       </if>
+			
+			
+			 <if test="tai != null and tai != ''" >
+					tai   = #{tai },
+      	       </if>
+			
+			
+			 <if test="xi != null and xi != ''" >
+					xi   = #{xi },
+      	       </if>
+			
+			
+			 <if test="peng != null and peng != ''" >
+					peng   = #{peng },
+      	       </if>
+			
+			
+			 <if test="si != null and si != ''" >
+					si   = #{si },
+      	       </if>
+			
+			
+			 <if test="gu != null and gu != ''" >
+					gu   = #{gu },
+      	       </if>
+			
+			
+			 <if test="mu != null and mu != ''" >
+					mu   = #{mu },
+      	       </if>
+			
+			
+			 <if test="tu != null and tu != ''" >
+					tu   = #{tu },
+      	       </if>
+			
+			
+			 <if test="you != null and you != ''" >
+					you   = #{you },
+      	       </if>
+			
+			
+			 <if test="gong2 != null and gong2 != ''" >
+					gong2   = #{gong2 },
+      	       </if>
+			
+			
+			 <if test="bi != null and bi != ''" >
+					bi   = #{bi },
+      	       </if>
+			
+			
+			 <if test="jia != null and jia != ''" >
+					jia   = #{jia },
+      	       </if>
+			
+			
+			 <if test="zhe != null and zhe != ''" >
+					zhe   = #{zhe },
+      	       </if>
+			
+			
+			 <if test="di != null and di != ''" >
+					di   = #{di },
+      	       </if>
+			
+			
+			 <if test="tuo != null and tuo != ''" >
+					tuo   = #{tuo },
+      	       </if>
+			
+			
+			 <if test="ludaiting != null and ludaiting != ''" >
+					ludaiting   = #{ludaiting },
+      	       </if>
+			
+			
+			 <if test="huifayoujiwu != null and huifayoujiwu != ''" >
+					huifayoujiwu   = #{huifayoujiwu },
+      	       </if>
+			
+			
+			 <if test="huifashiyou != null and huifashiyou != ''" >
+					huifashiyou   = #{huifashiyou },
+      	       </if>
+			
+			
+			 <if test="duolulianben != null and duolulianben != ''" >
+					duolulianben   = #{duolulianben },
+      	       </if>
+			
+			
+			 <if test="duohuanfangting != null and duohuanfangting != ''" >
+					duohuanfangting   = #{duohuanfangting },
+      	       </if>
+			
+			
+			 <if test="tiquluhuawu != null and tiquluhuawu != ''" >
+					tiquluhuawu   = #{tiquluhuawu },
+      	       </if>
+			
+			
+			 <if test="banhuifayoujiwu != null and banhuifayoujiwu != ''" >
+					banhuifayoujiwu   = #{banhuifayoujiwu },
+      	       </if>
+			
+			
+			 <if test="youjilunongyao != null and youjilunongyao != ''" >
+					youjilunongyao   = #{youjilunongyao },
+      	       </if>
+			
+			
+			 <if test="youjilinnongyao != null and youjilinnongyao != ''" >
+					youjilinnongyao   = #{youjilinnongyao },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

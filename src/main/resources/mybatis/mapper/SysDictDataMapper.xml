@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SysDictDataMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.SysDictData" >
+  
+		    <result column="id" property="id" />
+		    <result column="pid" property="pid" />
+		    <result column="data_type" property="dataType" />
+		    <result column="data_name" property="dataName" />
+		    <result column="data_value" property="dataValue" />
+		    <result column="sort_no" property="sortNo" />
+		    <result column="status" property="status" />
+		    <result column="data_desc" property="dataDesc" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  SYS_DICT_DATA
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.SysDictData">
+    select 
+    *
+    from  SYS_DICT_DATA
+   <where>
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="pid != null ">
+				AND pid = #{pid}
+			</if>
+		   <if test="nopid != null ">
+			   AND pid != 0
+		   </if>
+	   <if test="dataType != null and dataType != '' ">
+				AND data_type = #{dataType}
+			</if>   
+			<if test="dataName != null and dataName != '' ">
+				AND data_name = #{dataName}
+			</if>   
+			<if test="dataValue != null and dataValue != '' ">
+				AND data_value = #{dataValue}
+			</if>   
+			<if test="sortNo != null and sortNo != '' ">
+				AND sort_no = #{sortNo}
+			</if>   
+			<if test="status != null and status != '' ">
+				AND status = #{status}
+			</if>   
+			<if test="dataDesc != null and dataDesc != '' ">
+				AND data_desc = #{dataDesc}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+	</where>
+		 order by sort_no asc
+  </select>
+
+
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SYS_DICT_DATA
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.SysDictData"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SYS_DICT_DATA
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="pid != null" >
+      	            pid ,
+      	       </if>
+			 <if test="dataType != null and dataType != ''" >
+      	            data_type ,
+      	       </if>
+			 <if test="dataName != null and dataName != ''" >
+      	            data_name ,
+      	       </if>
+			 <if test="dataValue != null and dataValue != ''" >
+      	            data_value ,
+      	       </if>
+			 <if test="sortNo != null and sortNo != ''" >
+      	            sort_no ,
+      	       </if>
+			 <if test="status != null and status != ''" >
+      	            status ,
+      	       </if>
+			 <if test="dataDesc != null and dataDesc != ''" >
+      	            data_desc ,
+      	       </if>
+      	            create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="pid != null" >
+      	            #{pid},
+      	       </if>
+			
+			
+			 <if test="dataType != null and dataType != ''" >
+      	            #{dataType},
+      	       </if>
+			
+			
+			 <if test="dataName != null and dataName != ''" >
+      	            #{dataName},
+      	       </if>
+			
+			
+			 <if test="dataValue != null and dataValue != ''" >
+      	            #{dataValue},
+      	       </if>
+			
+			
+			 <if test="sortNo != null and sortNo != ''" >
+      	            #{sortNo},
+      	       </if>
+			
+			
+			 <if test="status != null and status != ''" >
+      	            #{status},
+      	       </if>
+			
+			
+			 <if test="dataDesc != null and dataDesc != ''" >
+      	            #{dataDesc},
+      	       </if>
+			
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.SysDictData" >
+    update  SYS_DICT_DATA
+    <set >
+			
+			
+			
+			 <if test="pid != null" >
+					pid   = #{pid },
+      	       </if>
+			
+			
+			 <if test="dataType != null and dataType != ''" >
+					data_type   = #{dataType },
+      	       </if>
+			
+			
+			 <if test="dataName != null and dataName != ''" >
+					data_name   = #{dataName },
+      	       </if>
+			
+			
+			 <if test="dataValue != null and dataValue != ''" >
+					data_value   = #{dataValue },
+      	       </if>
+			
+			
+			 <if test="sortNo != null and sortNo != ''" >
+					sort_no   = #{sortNo },
+      	       </if>
+			
+			
+			 <if test="status != null and status != ''" >
+					status   = #{status },
+      	       </if>
+			
+			
+			 <if test="dataDesc != null and dataDesc != ''" >
+					data_desc   = #{dataDesc },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

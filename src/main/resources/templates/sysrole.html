@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="common :: common_header(~{::title},~{::link},~{::script})">
+<meta charset="utf-8" />
+<title>系统</title>
+<link rel="stylesheet" th:href="@{/css/ex.css}" />
+	</head>
+
+
+<style type="text/css">
+			
+body {
+	
+	background-color:#e6e8ea;
+	padding-right:0px !important;
+	    background-color: white;
+	    height:100%;
+}
+.modal{
+	overflow:auto !important;
+	padding-right:0px !important;
+}
+
+
+</style>
+<script type="text/javascript">
+
+</script>
+
+<body >
+<!--cantainer-fluid  开始 -->
+<div class = "cantainer">
+	<!-- row-fluid  第一个开始 -->
+	<div class="row">
+		<!-- col-md-12  第一个开始 -->
+		<div class = "col-md-12">
+			<!-- panel panel-default  第一个开始 -->
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<!-- 查询条件开始 -->
+				<form id="searchForm" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-md-1 control-label" for = "customerName">客户姓名</label>
+						<div class="col-md-2">
+							<input class="form-control" type="text" name="customerName">
+						</div>
+						
+						<div class="col-sm-6" align="left">
+							<button type="button" class="btn btn-md btn-success" onclick = "operation.searchForm()">
+								<span class="glyphicon glyphicon-search"></span>查询
+							</button>
+							<!-- <button type="button" class="btn btn-md btn-info" onclick="">
+								<span class="glyphicon glyphicon-download"></span>导出
+							</button> -->
+						</div>
+					</div>
+				
+				</form>
+				<!-- 查询条件结束 -->
+				</div>
+			</div>
+			<!-- panel panel-default  第一个开始 -->
+		</div>
+		<!-- col-md-12  第一个结束 -->	
+	</div>
+	<!-- row-fluid  第一个结束 -->
+	
+	<!-- row-fluid  第二个开始-->
+	<div class="row-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<!-- toolbar开始 -->
+				<div id="toolbar" class="btn-toolbar" role="toolbar">
+					<button id="add_btn" type="button" class="btn  btn-success btn-md" onclick = "operation.addWindow()">
+						<span class="glyphicon glyphicon-plus"></span> 新增
+					</button>
+					<button id="edit_btn" type="button" class="btn  btn-info  btn_md" onclick="operation.editWindow()">
+						<span class="glyphicon glyphicon-edit"></span> 编辑
+					</button>
+					<button id="delete_btn" type="button" class="btn  btn-danger btn-md" onclick="operation.deleteFrom()">
+						<span class="glyphicon glyphicon-minus"></span> 删除
+					</button>
+					<button  type="button" class="btn  btn-danger btn-md" onclick="operation.roleAuthWindow()">
+						<span class="glyphicon glyphicon-minus"></span> 角色绑定菜单
+					</button>
+				</div>
+				<!-- toolbar结束 -->
+				<table id="dg"></table>
+			</div>
+		</div>
+	</div>
+<!-- row-fluid  第二个结束-->
+
+
+</div>
+<!--cantainer-fluid  结束 -->
+
+<!-- 第一个model 开始 -->
+<div id="setModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header">
+				编辑
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+				<form id="setForm" class="form-horizontal">
+					<input type="hidden" name="id">
+					
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="roleName">角色名称</label>
+								<div class="col-sm-6">
+									<input class="form-control"  name="roleName"  placeholder="请输入角色名称"/>
+								</div>
+							</div>
+						
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="remark">备注</label>
+								<div class="col-sm-6">
+									<input class="form-control"  name="remark"  placeholder="请输入备注"/>
+								</div>
+							</div>
+					
+					
+					
+					
+					
+				</form>	
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+				<button id="add_save_btn" type="button" class="btn btn-success" onclick = "operation.addForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="edit_save_btn" type="button" class="btn btn-info" onclick = "operation.editForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="delete_save_btn" type="button" class="btn btn-warning" onclick = "operation.closeMoal()">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<!-- 第一个model 结束 -->
+
+
+
+<!-- 第一个model 开始 -->
+<div id="setMenuAuthModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header">
+				角色绑定菜单
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+
+					<input type="hidden" name="id">
+				<div id="treeview"></div>
+
+
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick = "operation.addMenuAuthForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+
+				<button type="button" class="btn btn-warning" onclick = "operation.closeMenuAuthMoal()">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+
+		</div>
+	</div>
+
+
+
+</div>
+<!-- 第一个model 结束 -->
+
+
+
+
+
+<script type="text/javascript" th:inline="none">
+
+
+
+
+var roleId ;
+//用户操作
+var operation={
+	//角色绑定菜单
+	roleAuthWindow:function(){
+		var rows = $("#dg").bootstrapTable("getSelections");
+		if(rows.length == 1  ){
+			roleId = rows[0].id;
+			$('#setMenuAuthModal').modal('show');
+			getTree("/SysMenu/getSysMenuTreeDataByRoleId", {roleId:rows[0].id})
+
+		}else{
+			message.alert("请选择一条绑定数据！");
+			return;
+		}
+
+
+
+	},
+
+	addMenuAuthForm:function(){
+
+		var nodes = $( '#treeview' ).treeview( 'getChecked');
+		var menuIds='';
+		if(nodes.length!=0){
+			for (var x=0 ;x< nodes.length;x++) {
+				var node = nodes[x];
+				menuIds+=node.id;
+				if(x<nodes.length-1){
+					menuIds+=",";
+				}
+			}
+
+
+			var temp = {}
+			temp.menuIds = menuIds;
+			temp.roleId = roleId;
+			$.post("/SysRoleMenu/insertSysRoleMenu", temp ,function(data) {
+				message.alert(data.showInfo);
+			});
+
+
+
+		}else{
+			message.alert("请勾选菜单！");
+		}
+
+		console.info(menus)
+	},
+
+	closeMenuAuthMoal:function(){
+		$( '#treeview' ).treeview( 'remove' );
+		$('#setMenuAuthModal').modal('hide');
+	},
+	searchForm:function(){
+		$('#dg').bootstrapTable("refresh");
+	},
+	//弹出添加页面
+	addWindow:function(){
+		$('#setModal').modal('show');
+		formObj.setBtnIsShow("add_save_btn","edit_save_btn",1);
+
+	},
+	//添加表单
+	addForm:function(){
+		$("#setForm").bootstrapValidator('validate');
+		if($("#setForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setForm");
+			$.post("/SysRole/insertSysRole", temp ,function(data) {
+			
+				$("#dg").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				$('#setForm').data('bootstrapValidator').resetForm(true);
+				$('#setForm')[0].reset();
+				$('#setModal').modal('hide');
+			});
+		}
+		
+	},
+	//弹出修改页面
+	editWindow:function(){
+		var rows = $('#dg').bootstrapTable('getSelections');
+		if(rows.length == 1  ){
+			setForm("#setForm",rows[0]);
+			$('#setModal').modal('show');
+			formObj.setBtnIsShow("add_save_btn","edit_save_btn",0);
+			
+		}else{
+			message.alert("请选择一条要修改的数据！");
+			return;
+		}
+		
+	},
+	//修改表单
+	editForm:function(){
+		var validate = $("#setForm").bootstrapValidator('validate');
+		if($("#setForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setForm");
+			$.post("/SysRole/updateSysRole", temp ,function(data) {
+				
+				$("#dg").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				$('#setForm').data('bootstrapValidator').resetForm(true);
+				$('#setForm')[0].reset();
+				$('#setModal').modal('hide');
+			});
+		}
+		
+	},
+	//删除表单
+	deleteFrom:function(){
+		var rows = $("#dg").bootstrapTable("getSelections");
+		if(rows.length == 1  ){
+			bootbox.confirm({
+				size:"small",
+				title:"提示",
+				message:"确认删除这条数据吗？",
+				callback:function(result){
+					if(result){
+						$.post("/SysRole/deleteSysRole", {id:rows[0].id} ,function(data) {
+							
+							$("#dg").bootstrapTable("refresh");
+							message.alert(data.showInfo);
+							
+						});
+						
+					}
+				}
+			});
+			
+		}else{
+			message.alert("请选择一条要删除的数据！");
+			return;
+		}
+		
+	},
+	//关闭页面
+	closeMoal:function(){
+		$('#setForm').data('bootstrapValidator').resetForm(true);
+		//$('#setForm').reset();
+		$('#setModal').modal('hide');
+	},
+	//导出
+	exportFile:function(){
+		
+		
+	},
+	//审核
+	audit:function(){
+		
+		
+	}
+}
+
+
+
+
+$(function(){
+	$('#dg').bootstrapTable({
+		url:"/SysRole/query",
+		sidePagination:"server",
+		queryParams:fmt.queryParams,
+method: "post",
+        contentType:"application/x-www-form-urlencoded",
+		pagination:true,
+		pageNumber:1,
+		pageSize:10,
+		pageList:[10,25,50,100],
+		//search:true,
+		clickToSelect:true,
+		singleSelect:true,
+		toolbar:'#toolbar',
+		columns:columns,
+	})
+	
+});
+
+//表格格式化
+var fmt = {
+	queryParams:function(params){
+		var temp = getFormJson("searchForm");
+		temp.rows = params.limit;
+		temp.currentPage = (params.offset/params.limit)+1;
+		return temp;
+		
+	},	
+	setTime:function(value,row,index){
+		
+		return formatTimeYMDhms(value);  //转成年月日时分秒
+	},
+setOpt:function(value,row,index){
+		var html ="";
+		html +='<button type="button" class="btn btn-md btn-info" onclick = "operation.addScore('+index+')"><span class="glyphicon glyphicon-add"></span>添加成绩</button>'
+		return html;
+	},	
+	setActImgUrl:function(value,row,index){
+		return '<img src="'+value+'" style="width:100px;heigth:100px"></img>';
+	}		
+}
+var columns=[[
+ 	 {
+		field:'ck',
+		width:'2%',
+		checkbox:true,
+		align:'center',
+		
+	},  
+	{
+		field:'id',
+		title:'id',
+		width:10,
+		align:'center',
+		visible:false
+	},
+	    
+		
+					{title: '角色名称', field: 'roleName', align: 'center', valign: 'middle',visible:true},
+					{title: '创建时间', field: 'createTime', align: 'center', valign: 'middle',visible:true},
+					{title: '修改时间', field: 'updateTime', align: 'center', valign: 'middle',visible:true},
+					{title: '备注', field: 'remark', align: 'center', valign: 'middle',visible:true},
+
+	
+	
+]];
+
+
+$(function(){
+	$("#setForm").bootstrapValidator({
+		/* live:'disabled', */
+		excluded:[':disabled'],
+		feedbackIcons: {
+    　　　　　　　　valid: 'glyphicon glyphicon-ok',
+    　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+    　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+　　　　　   },
+		fields:{
+		
+		
+					
+					
+				roleName:{
+					validators:{
+						 notEmpty: {
+							message:"角色名称不能为空!",
+						},
+					}
+					
+				},
+					
+					
+					
+				createTime:{
+					validators:{
+						 notEmpty: {
+							message:"创建时间不能为空!",
+						},
+					}
+					
+				},
+					
+					
+					
+				updateTime:{
+					validators:{
+						 notEmpty: {
+							message:"修改时间不能为空!",
+						},
+					}
+					
+				},
+	
+					
+                customerName:{
+					validators:{
+						 notEmpty: {
+							message:"客户姓名不能为空!",
+						},
+							stringLength: {
+	                            min: 1,
+	                            max: 32,
+	                            message: '客户姓名长度必须在1到32位字符之间'
+	                        },
+					}
+					
+				},
+         
+				
+			
+		}
+		
+	});
+	
+	
+	
+})
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>

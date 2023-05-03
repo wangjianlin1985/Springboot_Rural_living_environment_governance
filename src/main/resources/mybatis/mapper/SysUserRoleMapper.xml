@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SysUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.SysUserRole" >
+  
+		    <result column="id" property="id" />
+		    <result column="role_id" property="roleId" />
+		    <result column="user_id" property="userId" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  SYS_USER_ROLE
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.SysUserRole">
+    select 
+    *
+    from  SYS_USER_ROLE
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="roleId != null and roleId != '' ">
+				AND role_id = #{roleId}
+			</if>   
+			<if test="userId != null and userId != '' ">
+				AND user_id = #{userId}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SYS_USER_ROLE
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.SysUserRole"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SYS_USER_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="roleId != null and roleId != ''" >
+      	            role_id ,
+      	       </if>
+			 <if test="userId != null and userId != ''" >
+      	            user_id ,
+      	       </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="roleId != null and roleId != ''" >
+      	            #{roleId},
+      	       </if>
+			
+			
+			 <if test="userId != null and userId != ''" >
+      	            #{userId},
+      	       </if>
+			
+			
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.SysUserRole" >
+    update  SYS_USER_ROLE
+    <set >
+			
+			
+			
+			 <if test="roleId != null and roleId != ''" >
+					role_id   = #{roleId },
+      	       </if>
+			
+			
+			 <if test="userId != null and userId != ''" >
+					user_id   = #{userId },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

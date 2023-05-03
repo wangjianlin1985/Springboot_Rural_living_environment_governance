@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SzjgMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Szjg" >
+  
+		    <result column="id" property="id" />
+		    <result column="shuizhileixing" property="shuizhileixing" />
+		    <result column="shuizhidengji" property="shuizhidengji" />
+		    <result column="gutihanliang" property="gutihanliang" />
+		    <result column="hunzhudu" property="hunzhudu" />
+		    <result column="toumingdu" property="toumingdu" />
+		    <result column="wendu" property="wendu" />
+		    <result column="diandaolv" property="diandaolv" />
+		    <result column="ph" property="ph" />
+		    <result column="yingdu" property="yingdu" />
+		    <result column="youjiwu" property="youjiwu" />
+		    <result column="weishifenbu" property="weishifenbu" />
+		    <result column="dianfenbu" property="dianfenbu" />
+		    <result column="pingjunfenbu" property="pingjunfenbu" />
+		    <result column="jizhongfenbu" property="jizhongfenbu" />
+		    <result column="renjunfenbuliang" property="renjunfenbuliang" />
+		    <result column="ziliashui" property="ziliashui" />
+		    <result column="jinshui" property="jinshui" />
+		    <result column="yushui" property="yushui" />
+		    <result column="huposhui" property="huposhui" />
+		    <result column="qita" property="qita" />
+		    <result column="pingjunriyongshuiliang" property="pingjunriyongshuiliang" />
+		    <result column="renjunshuiliang" property="renjunshuiliang" />
+		    <result column="zongcunchuliang" property="zongcunchuliang" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  SZJG
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+    <select id="tongji" resultMap="BaseResultMap">
+   SELECT IFNULL(SUM(ziliashui),0) AS ziliashui ,IFNULL(SUM(jinshui),0) AS jinshui, IFNULL(SUM(yushui),0) AS yushui,IFNULL(SUM(huposhui),0) AS huposhui,IFNULL(SUM(qita),0) AS qita FROM szjg 
+   </select>
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Szjg">
+    select 
+    *
+    from  SZJG
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="shuizhileixing != null and shuizhileixing != '' ">
+				AND shuizhileixing = #{shuizhileixing}
+			</if>   
+			<if test="shuizhidengji != null and shuizhidengji != '' ">
+				AND shuizhidengji = #{shuizhidengji}
+			</if>   
+			<if test="gutihanliang != null and gutihanliang != '' ">
+				AND gutihanliang = #{gutihanliang}
+			</if>   
+			<if test="hunzhudu != null and hunzhudu != '' ">
+				AND hunzhudu = #{hunzhudu}
+			</if>   
+			<if test="toumingdu != null and toumingdu != '' ">
+				AND toumingdu = #{toumingdu}
+			</if>   
+			<if test="wendu != null and wendu != '' ">
+				AND wendu = #{wendu}
+			</if>   
+			<if test="diandaolv != null and diandaolv != '' ">
+				AND diandaolv = #{diandaolv}
+			</if>   
+			<if test="ph != null and ph != '' ">
+				AND ph = #{ph}
+			</if>   
+			<if test="yingdu != null and yingdu != '' ">
+				AND yingdu = #{yingdu}
+			</if>   
+			<if test="youjiwu != null and youjiwu != '' ">
+				AND youjiwu = #{youjiwu}
+			</if>   
+			<if test="weishifenbu != null and weishifenbu != '' ">
+				AND weishifenbu = #{weishifenbu}
+			</if>   
+			<if test="dianfenbu != null and dianfenbu != '' ">
+				AND dianfenbu = #{dianfenbu}
+			</if>   
+			<if test="pingjunfenbu != null and pingjunfenbu != '' ">
+				AND pingjunfenbu = #{pingjunfenbu}
+			</if>   
+			<if test="jizhongfenbu != null and jizhongfenbu != '' ">
+				AND jizhongfenbu = #{jizhongfenbu}
+			</if>   
+			<if test="renjunfenbuliang != null and renjunfenbuliang != '' ">
+				AND renjunfenbuliang = #{renjunfenbuliang}
+			</if>   
+			<if test="ziliashui != null and ziliashui != '' ">
+				AND ziliashui = #{ziliashui}
+			</if>   
+			<if test="jinshui != null and jinshui != '' ">
+				AND jinshui = #{jinshui}
+			</if>   
+			<if test="yushui != null and yushui != '' ">
+				AND yushui = #{yushui}
+			</if>   
+			<if test="huposhui != null and huposhui != '' ">
+				AND huposhui = #{huposhui}
+			</if>   
+			<if test="qita != null and qita != '' ">
+				AND qita = #{qita}
+			</if>   
+			<if test="pingjunriyongshuiliang != null and pingjunriyongshuiliang != '' ">
+				AND pingjunriyongshuiliang = #{pingjunriyongshuiliang}
+			</if>   
+			<if test="renjunshuiliang != null and renjunshuiliang != '' ">
+				AND renjunshuiliang = #{renjunshuiliang}
+			</if>   
+			<if test="zongcunchuliang != null and zongcunchuliang != '' ">
+				AND zongcunchuliang = #{zongcunchuliang}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SZJG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Szjg"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SZJG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="shuizhileixing != null and shuizhileixing != ''" >
+      	            shuizhileixing ,
+      	       </if>
+			 <if test="shuizhidengji != null and shuizhidengji != ''" >
+      	            shuizhidengji ,
+      	       </if>
+			 <if test="gutihanliang != null and gutihanliang != ''" >
+      	            gutihanliang ,
+      	       </if>
+			 <if test="hunzhudu != null and hunzhudu != ''" >
+      	            hunzhudu ,
+      	       </if>
+			 <if test="toumingdu != null and toumingdu != ''" >
+      	            toumingdu ,
+      	       </if>
+			 <if test="wendu != null and wendu != ''" >
+      	            wendu ,
+      	       </if>
+			 <if test="diandaolv != null and diandaolv != ''" >
+      	            diandaolv ,
+      	       </if>
+			 <if test="ph != null and ph != ''" >
+      	            ph ,
+      	       </if>
+			 <if test="yingdu != null and yingdu != ''" >
+      	            yingdu ,
+      	       </if>
+			 <if test="youjiwu != null and youjiwu != ''" >
+      	            youjiwu ,
+      	       </if>
+			 <if test="weishifenbu != null and weishifenbu != ''" >
+      	            weishifenbu ,
+      	       </if>
+			 <if test="dianfenbu != null and dianfenbu != ''" >
+      	            dianfenbu ,
+      	       </if>
+			 <if test="pingjunfenbu != null and pingjunfenbu != ''" >
+      	            pingjunfenbu ,
+      	       </if>
+			 <if test="jizhongfenbu != null and jizhongfenbu != ''" >
+      	            jizhongfenbu ,
+      	       </if>
+			 <if test="renjunfenbuliang != null and renjunfenbuliang != ''" >
+      	            renjunfenbuliang ,
+      	       </if>
+			 <if test="ziliashui != null and ziliashui != ''" >
+      	            ziliashui ,
+      	       </if>
+			 <if test="jinshui != null and jinshui != ''" >
+      	            jinshui ,
+      	       </if>
+			 <if test="yushui != null and yushui != ''" >
+      	            yushui ,
+      	       </if>
+			 <if test="huposhui != null and huposhui != ''" >
+      	            huposhui ,
+      	       </if>
+			 <if test="qita != null and qita != ''" >
+      	            qita ,
+      	       </if>
+			 <if test="pingjunriyongshuiliang != null and pingjunriyongshuiliang != ''" >
+      	            pingjunriyongshuiliang ,
+      	       </if>
+			 <if test="renjunshuiliang != null and renjunshuiliang != ''" >
+      	            renjunshuiliang ,
+      	       </if>
+			 <if test="zongcunchuliang != null and zongcunchuliang != ''" >
+      	            zongcunchuliang ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="shuizhileixing != null and shuizhileixing != ''" >
+      	            #{shuizhileixing},
+      	       </if>
+			
+			
+			 <if test="shuizhidengji != null and shuizhidengji != ''" >
+      	            #{shuizhidengji},
+      	       </if>
+			
+			
+			 <if test="gutihanliang != null and gutihanliang != ''" >
+      	            #{gutihanliang},
+      	       </if>
+			
+			
+			 <if test="hunzhudu != null and hunzhudu != ''" >
+      	            #{hunzhudu},
+      	       </if>
+			
+			
+			 <if test="toumingdu != null and toumingdu != ''" >
+      	            #{toumingdu},
+      	       </if>
+			
+			
+			 <if test="wendu != null and wendu != ''" >
+      	            #{wendu},
+      	       </if>
+			
+			
+			 <if test="diandaolv != null and diandaolv != ''" >
+      	            #{diandaolv},
+      	       </if>
+			
+			
+			 <if test="ph != null and ph != ''" >
+      	            #{ph},
+      	       </if>
+			
+			
+			 <if test="yingdu != null and yingdu != ''" >
+      	            #{yingdu},
+      	       </if>
+			
+			
+			 <if test="youjiwu != null and youjiwu != ''" >
+      	            #{youjiwu},
+      	       </if>
+			
+			
+			 <if test="weishifenbu != null and weishifenbu != ''" >
+      	            #{weishifenbu},
+      	       </if>
+			
+			
+			 <if test="dianfenbu != null and dianfenbu != ''" >
+      	            #{dianfenbu},
+      	       </if>
+			
+			
+			 <if test="pingjunfenbu != null and pingjunfenbu != ''" >
+      	            #{pingjunfenbu},
+      	       </if>
+			
+			
+			 <if test="jizhongfenbu != null and jizhongfenbu != ''" >
+      	            #{jizhongfenbu},
+      	       </if>
+			
+			
+			 <if test="renjunfenbuliang != null and renjunfenbuliang != ''" >
+      	            #{renjunfenbuliang},
+      	       </if>
+			
+			
+			 <if test="ziliashui != null and ziliashui != ''" >
+      	            #{ziliashui},
+      	       </if>
+			
+			
+			 <if test="jinshui != null and jinshui != ''" >
+      	            #{jinshui},
+      	       </if>
+			
+			
+			 <if test="yushui != null and yushui != ''" >
+      	            #{yushui},
+      	       </if>
+			
+			
+			 <if test="huposhui != null and huposhui != ''" >
+      	            #{huposhui},
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+      	            #{qita},
+      	       </if>
+			
+			
+			 <if test="pingjunriyongshuiliang != null and pingjunriyongshuiliang != ''" >
+      	            #{pingjunriyongshuiliang},
+      	       </if>
+			
+			
+			 <if test="renjunshuiliang != null and renjunshuiliang != ''" >
+      	            #{renjunshuiliang},
+      	       </if>
+			
+			
+			 <if test="zongcunchuliang != null and zongcunchuliang != ''" >
+      	            #{zongcunchuliang},
+      	       </if>
+			
+			
+			sysdate()
+			
+			
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Szjg" >
+    update  SZJG
+    <set >
+			
+			
+			
+			 <if test="shuizhileixing != null and shuizhileixing != ''" >
+					shuizhileixing   = #{shuizhileixing },
+      	       </if>
+			
+			
+			 <if test="shuizhidengji != null and shuizhidengji != ''" >
+					shuizhidengji   = #{shuizhidengji },
+      	       </if>
+			
+			
+			 <if test="gutihanliang != null and gutihanliang != ''" >
+					gutihanliang   = #{gutihanliang },
+      	       </if>
+			
+			
+			 <if test="hunzhudu != null and hunzhudu != ''" >
+					hunzhudu   = #{hunzhudu },
+      	       </if>
+			
+			
+			 <if test="toumingdu != null and toumingdu != ''" >
+					toumingdu   = #{toumingdu },
+      	       </if>
+			
+			
+			 <if test="wendu != null and wendu != ''" >
+					wendu   = #{wendu },
+      	       </if>
+			
+			
+			 <if test="diandaolv != null and diandaolv != ''" >
+					diandaolv   = #{diandaolv },
+      	       </if>
+			
+			
+			 <if test="ph != null and ph != ''" >
+					ph   = #{ph },
+      	       </if>
+			
+			
+			 <if test="yingdu != null and yingdu != ''" >
+					yingdu   = #{yingdu },
+      	       </if>
+			
+			
+			 <if test="youjiwu != null and youjiwu != ''" >
+					youjiwu   = #{youjiwu },
+      	       </if>
+			
+			
+			 <if test="weishifenbu != null and weishifenbu != ''" >
+					weishifenbu   = #{weishifenbu },
+      	       </if>
+			
+			
+			 <if test="dianfenbu != null and dianfenbu != ''" >
+					dianfenbu   = #{dianfenbu },
+      	       </if>
+			
+			
+			 <if test="pingjunfenbu != null and pingjunfenbu != ''" >
+					pingjunfenbu   = #{pingjunfenbu },
+      	       </if>
+			
+			
+			 <if test="jizhongfenbu != null and jizhongfenbu != ''" >
+					jizhongfenbu   = #{jizhongfenbu },
+      	       </if>
+			
+			
+			 <if test="renjunfenbuliang != null and renjunfenbuliang != ''" >
+					renjunfenbuliang   = #{renjunfenbuliang },
+      	       </if>
+			
+			
+			 <if test="ziliashui != null and ziliashui != ''" >
+					ziliashui   = #{ziliashui },
+      	       </if>
+			
+			
+			 <if test="jinshui != null and jinshui != ''" >
+					jinshui   = #{jinshui },
+      	       </if>
+			
+			
+			 <if test="yushui != null and yushui != ''" >
+					yushui   = #{yushui },
+      	       </if>
+			
+			
+			 <if test="huposhui != null and huposhui != ''" >
+					huposhui   = #{huposhui },
+      	       </if>
+			
+			
+			 <if test="qita != null and qita != ''" >
+					qita   = #{qita },
+      	       </if>
+			
+			
+			 <if test="pingjunriyongshuiliang != null and pingjunriyongshuiliang != ''" >
+					pingjunriyongshuiliang   = #{pingjunriyongshuiliang },
+      	       </if>
+			
+			
+			 <if test="renjunshuiliang != null and renjunshuiliang != ''" >
+					renjunshuiliang   = #{renjunshuiliang },
+      	       </if>
+			
+			
+			 <if test="zongcunchuliang != null and zongcunchuliang != ''" >
+					zongcunchuliang   = #{zongcunchuliang },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.WsjgMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Wsjg" >
+  
+		    <result column="id" property="id" />
+		    <result column="weishengleixing" property="weishengleixing" />
+		    <result column="shenghuolaji" property="shenghuolaji" />
+		    <result column="gongyelaji" property="gongyelaji" />
+		    <result column="jianzhulaji" property="jianzhulaji" />
+		    <result column="qitalaji" property="qitalaji" />
+		    <result column="lajichuli" property="lajichuli" />
+		    <result column="shenghuowushui" property="shenghuowushui" />
+		    <result column="gongyewushui" property="gongyewushui" />
+		    <result column="qitawushui" property="qitawushui" />
+		    <result column="wushuichuli" property="wushuichuli" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  WSJG
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+   
+   <select id="tongjilaji" resultType="map">
+   SELECT IFNULL(SUM(shenghuolaji),0) AS value , '生活垃圾' AS name  FROM wsjg 
+UNION ALL 
+SELECT IFNULL(SUM(gongyelaji),0) AS value , '工业垃圾' AS name  FROM wsjg 
+UNION ALL 
+SELECT IFNULL(SUM(jianzhulaji),0) AS value , '建筑垃圾' AS name  FROM wsjg 
+UNION ALL 
+SELECT IFNULL(SUM(qitalaji),0) AS value , '其他垃圾' AS name  FROM wsjg 
+</select>
+
+<select id="tongjiwushui" resultType="map">
+SELECT IFNULL(SUM(shenghuowushui),0) AS value , '生活污水' AS name  FROM wsjg 
+UNION ALL 
+SELECT IFNULL(SUM(gongyewushui),0) AS value , '工业污水' AS name  FROM wsjg 
+UNION ALL 
+SELECT IFNULL(SUM(qitawushui),0) AS value , '其他污水' AS name  FROM wsjg 
+   </select>
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Wsjg">
+    select 
+    *
+    from  WSJG
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="weishengleixing != null and weishengleixing != '' ">
+				AND weishengleixing = #{weishengleixing}
+			</if>   
+			<if test="shenghuolaji != null and shenghuolaji != '' ">
+				AND shenghuolaji = #{shenghuolaji}
+			</if>   
+			<if test="gongyelaji != null and gongyelaji != '' ">
+				AND gongyelaji = #{gongyelaji}
+			</if>   
+			<if test="jianzhulaji != null and jianzhulaji != '' ">
+				AND jianzhulaji = #{jianzhulaji}
+			</if>   
+			<if test="qitalaji != null and qitalaji != '' ">
+				AND qitalaji = #{qitalaji}
+			</if>   
+			<if test="lajichuli != null and lajichuli != '' ">
+				AND lajichuli = #{lajichuli}
+			</if>   
+			<if test="shenghuowushui != null and shenghuowushui != '' ">
+				AND shenghuowushui = #{shenghuowushui}
+			</if>   
+			<if test="gongyewushui != null and gongyewushui != '' ">
+				AND gongyewushui = #{gongyewushui}
+			</if>   
+			<if test="qitawushui != null and qitawushui != '' ">
+				AND qitawushui = #{qitawushui}
+			</if>   
+			<if test="wushuichuli != null and wushuichuli != '' ">
+				AND wushuichuli = #{wushuichuli}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  WSJG
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Wsjg"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  WSJG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="weishengleixing != null and weishengleixing != ''" >
+      	            weishengleixing ,
+      	       </if>
+			 <if test="shenghuolaji != null and shenghuolaji != ''" >
+      	            shenghuolaji ,
+      	       </if>
+			 <if test="gongyelaji != null and gongyelaji != ''" >
+      	            gongyelaji ,
+      	       </if>
+			 <if test="jianzhulaji != null and jianzhulaji != ''" >
+      	            jianzhulaji ,
+      	       </if>
+			 <if test="qitalaji != null and qitalaji != ''" >
+      	            qitalaji ,
+      	       </if>
+			 <if test="lajichuli != null and lajichuli != ''" >
+      	            lajichuli ,
+      	       </if>
+			 <if test="shenghuowushui != null and shenghuowushui != ''" >
+      	            shenghuowushui ,
+      	       </if>
+			 <if test="gongyewushui != null and gongyewushui != ''" >
+      	            gongyewushui ,
+      	       </if>
+			 <if test="qitawushui != null and qitawushui != ''" >
+      	            qitawushui ,
+      	       </if>
+			 <if test="wushuichuli != null and wushuichuli != ''" >
+      	            wushuichuli ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="weishengleixing != null and weishengleixing != ''" >
+      	            #{weishengleixing},
+      	       </if>
+			
+			
+			 <if test="shenghuolaji != null and shenghuolaji != ''" >
+      	            #{shenghuolaji},
+      	       </if>
+			
+			
+			 <if test="gongyelaji != null and gongyelaji != ''" >
+      	            #{gongyelaji},
+      	       </if>
+			
+			
+			 <if test="jianzhulaji != null and jianzhulaji != ''" >
+      	            #{jianzhulaji},
+      	       </if>
+			
+			
+			 <if test="qitalaji != null and qitalaji != ''" >
+      	            #{qitalaji},
+      	       </if>
+			
+			
+			 <if test="lajichuli != null and lajichuli != ''" >
+      	            #{lajichuli},
+      	       </if>
+			
+			
+			 <if test="shenghuowushui != null and shenghuowushui != ''" >
+      	            #{shenghuowushui},
+      	       </if>
+			
+			
+			 <if test="gongyewushui != null and gongyewushui != ''" >
+      	            #{gongyewushui},
+      	       </if>
+			
+			
+			 <if test="qitawushui != null and qitawushui != ''" >
+      	            #{qitawushui},
+      	       </if>
+			
+			
+			 <if test="wushuichuli != null and wushuichuli != ''" >
+      	            #{wushuichuli},
+      	       </if>
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Wsjg" >
+    update  WSJG
+    <set >
+			
+			
+			
+			 <if test="weishengleixing != null and weishengleixing != ''" >
+					weishengleixing   = #{weishengleixing },
+      	       </if>
+			
+			
+			 <if test="shenghuolaji != null and shenghuolaji != ''" >
+					shenghuolaji   = #{shenghuolaji },
+      	       </if>
+			
+			
+			 <if test="gongyelaji != null and gongyelaji != ''" >
+					gongyelaji   = #{gongyelaji },
+      	       </if>
+			
+			
+			 <if test="jianzhulaji != null and jianzhulaji != ''" >
+					jianzhulaji   = #{jianzhulaji },
+      	       </if>
+			
+			
+			 <if test="qitalaji != null and qitalaji != ''" >
+					qitalaji   = #{qitalaji },
+      	       </if>
+			
+			
+			 <if test="lajichuli != null and lajichuli != ''" >
+					lajichuli   = #{lajichuli },
+      	       </if>
+			
+			
+			 <if test="shenghuowushui != null and shenghuowushui != ''" >
+					shenghuowushui   = #{shenghuowushui },
+      	       </if>
+			
+			
+			 <if test="gongyewushui != null and gongyewushui != ''" >
+					gongyewushui   = #{gongyewushui },
+      	       </if>
+			
+			
+			 <if test="qitawushui != null and qitawushui != ''" >
+					qitawushui   = #{qitawushui },
+      	       </if>
+			
+			
+			 <if test="wushuichuli != null and wushuichuli != ''" >
+					wushuichuli   = #{wushuichuli },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

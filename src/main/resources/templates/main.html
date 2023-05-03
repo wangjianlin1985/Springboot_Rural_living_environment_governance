@@ -1,0 +1,301 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="common :: common_header(~{::title},~{::link},~{::script})">
+<meta charset="utf-8" />
+<title>农村人居环境治理综合监管平台</title>
+
+
+		<!-- basic styles -->
+		<link th:href="@{/plugins/ace/css/font-awesome.min.css}" rel="stylesheet" />
+		<!-- ace styles -->
+		<link rel="stylesheet" th:href="@{/plugins/ace/css/ace.min.css}" />
+		<!-- 自定义js -->
+		<script th:src="@{/plugins/ace/js/sidebar-menu.js}"></script>
+		<!-- ace scripts -->
+		<script th:src="@{/plugins/ace/js/ace-elements.min.js}"></script>
+		<script th:src="@{/plugins/ace/js/ace.min.js}"></script>
+
+	</head>
+
+<style type="text/css">
+			
+body {
+	overflow: hidden;
+}
+.tab-content {
+	border: none;
+	padding: 10px 0px;
+}
+
+#menu_li_0 {
+	display: none;
+}
+.ace-nav>li {
+ height: 50px;
+ 
+}
+</style>
+	<body>
+	<!-- <input id="role" th:value="${session.user.role}" hidden="true"> -->
+	<input id="roleId" th:value="${session.user.roleId}" hidden="true">
+	<input id="loginId" th:value="${session.user.id}" hidden="true">
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="login/index.htm" class="navbar-brand">
+						<small>
+							<i class="fa fa-envira"></i>农村人居环境治理综合监管平台
+
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<!-- <img class="nav-user-photo" src="images/user.jpg" alt="Jason's Photo" /> -->
+								<span class="user-info">
+									<small>欢迎光临,</small>
+									<p th:text="${session.user.name}"></p> 
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<!-- <li>
+									<a href="#">
+										<i class="icon-user"></i>
+										个人资料
+									</a>
+								</li> -->
+								 <li>
+									<a href="javascript:void(0)" onclick="editPwd()">
+										<i class="icon-cog"></i>
+										修改密码
+									</a>
+								</li>
+								<li class="divider"></li>
+
+								<li>
+									<a href="javascript:void(0)" onclick="logout()">
+										<i class="icon-off"></i>
+										退出
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="nav nav-list" id="menu">
+				
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					
+
+					<div class="page-content">
+						
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<ul class="nav nav-tabs" role="tablist">
+			       					<!--<li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li>-->
+			      				</ul>
+			      				<div class="tab-content">
+			       					<!--<div role="tabpanel" class="tab-pane active" id="Index"></div>-->
+			      				</div>
+								
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+
+
+<!-- 第一个model 开始 -->
+<div id="setModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header">
+				修改密码
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+				<form id="setForm" class="form-horizontal">
+					<input type="hidden" name="id">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="class_name">新密码</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text" id="password" name = "password" placeholder="请输入新密码">
+						</div>
+					</div>
+				</form>	
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+				<button id="edit_save_btn" type="button" class="btn btn_info" onclick = "editPassword()" style="background-color:#438EB9!important;border-color:#438EB9;">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="delete_save_btn" type="button" class="btn btn_warning" onclick = "closeMoal()"  style="background-color:#438EB9!important;border-color:#438EB9;">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+<!-- 第一个model 结束 -->
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript" >
+
+		
+			$(window).resize(function() {
+			  	$("#sidebar").height($(window).height()-$("#navbar").height());
+			  	$("div .tab-pane iframe").height($("#sidebar").height()-60);
+			});
+
+			$(function () {
+				
+				
+				$.post("/SysMenu/getMenusByUserByRoleId", {roleId:$("#roleId").val()
+					//THEME_TYPE : code
+				},function(data) {
+					$("#sidebar").height($(window).height()-$("#navbar").height()-40);	
+					$('#menu').sidebarMenu({
+						data:data.data
+					});
+					eval($("#menu_li_000 a").attr("href"));
+				});
+			/*	var data ;
+					data=[{
+					     id: '000',
+					     text: '首页',
+					     icon: 'fa fa-home fa-lg',
+					     url: '/TLogin/home',
+					    },
+					/!*     {
+						     id: '01', text: '基本信息管理', icon: 'fa fa-align-justify', url: '',
+						     menus: [
+						    	 	{id: '03',text: '用户管理', icon: 'fa fa-users', close: true,url: '/TUser/TUserHtml'},
+						    	 	{id: '04',text: '图书类型管理', icon: 'fa fa-users', close: true,url: '/TBookType/TBookTypeHtml'},
+									 
+						    	 	]
+						    }, *!/
+						    {id: '08',text: '用户管理', icon: 'fa fa-list-alt',close: true,url:'/SysUser/SysUserHtml'},
+						    {id: '09',text: '角色管理', icon: 'fa fa-list-alt',close: true,url: '/SysRole/SysRoleHtml'},
+						    {id: '10',text: '菜单管理', icon: 'fa fa-list-alt',close: true,url: '/SysMenu/SysMenuHtml'},
+						  /!*   {id: '11',text: '用户角色权限', icon: 'fa fa-list-alt',close: true,url: '/TBorrowRecord/TBorrowRecordHtml'}, *!/
+						    {id: '12',text: '角色菜单权限', icon: 'fa fa-list-alt',close: true,url: '/TBorrowRecord/TBorrowRecordHtml'},
+						    {id: '13',text: '部门管理', icon: 'fa fa-list-alt',close: true,url:'/SysDepartment/SysDepartmentHtml'},
+					    
+					   /!*  {id: '04',text: '统计', icon: 'fa fa-bar-chart',url: 'notice/noticeHtml.htm'}, *!/
+					    ]
+
+				
+				$("#sidebar").height($(window).height()-$("#navbar").height()-40);	
+				   $('#menu').sidebarMenu({
+				    data:data
+				   }); 
+				eval($("#menu_li_000 a").attr("href"));*/
+				   
+				   
+			  });
+			
+			
+
+		function logout(){
+			bootbox.confirm({
+				size:"small",
+				title:"提示",
+				message:"确认退出吗？",
+				callback:function(result){
+					if(result){
+						
+						window.location.href="/TLogin/loginout"
+					}
+				}
+			});
+			
+		}
+		
+		function editPwd(){
+			$('#setModal').modal('show');
+		}
+		function closeMoal(){
+			$('#setModal').modal('hide');
+		}  
+		
+		function editPassword(){
+			var password = $('#password').val();
+			if(password == ""){
+				message.alert("请输入新密码");
+				return;
+			}
+			
+			$.post("/TLogin/editPassword", {password:password,id:$("#loginId").val()} ,function(data) {
+				bootbox.alert({
+					size:"small",
+					title:"提示",
+					message:data.showInfo,
+					callback: function() {
+						window.location.href="/TLogin/loginout"
+					}
+				});
+				
+			});
+		} 
+		
+		
+
+		
+		
+		</script>
+</body>
+</html>
+

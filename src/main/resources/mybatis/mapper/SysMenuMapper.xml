@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SysMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.SysMenu" >
+  
+		    <result column="id" property="id" />
+		    <result column="menu_name" property="menuName" />
+		    <result column="url" property="url" />
+		    <result column="icon" property="icon" />
+		    <result column="pid" property="pid" />
+		    <result column="type" property="type" />
+		    <result column="order_num" property="orderNum" />
+		    <result column="create_time" property="createTime" />
+		    <result column="update_time" property="updateTime" />
+		    <result column="remark" property="remark" />
+	  <result column="p_name" property="pName" />
+	  <result column="role_menu_id" property="roleMenuId" />
+
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  SYS_MENU
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.SysMenu">
+    select 
+    t1.*,t2.menu_name p_name
+    from  SYS_MENU t1
+		 left join SYS_MENU t2 on t1.pid=t2.id
+   <where>
+   
+
+			<if test="menuName != null and menuName != '' ">
+				AND t1.menu_name = #{menuName}
+			</if>   
+			<if test="url != null and url != '' ">
+				AND t1.url = #{url}
+			</if>   
+			<if test="icon != null and icon != '' ">
+				AND t1.icon = #{icon}
+			</if>   
+			<if test="pid != null and pid != '' ">
+				AND t1.pid = #{pid}
+			</if>   
+			<if test="type != null and type != '' ">
+				AND t1.type = #{type}
+			</if>   
+			<if test="orderNum != null and orderNum != '' ">
+				AND t1.order_num = #{orderNum}
+			</if>   
+	</where>
+		 order by t1.order_num asc
+  </select>
+
+	<select id="getMenusByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		t1.*,t2.menu_name p_name ,t3.id role_menu_id
+		from  SYS_MENU t1
+		left join SYS_MENU t2 on t1.pid=t2.id
+		left join (select id, menu_id from sys_role_menu where role_id = #{roleId})  t3 on t1.id = t3.menu_id
+
+
+	</select>
+
+
+	<select id="getMenusByUserByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select
+	t1.*,t2.menu_name p_name ,t3.id role_menu_id
+	from  SYS_MENU t1
+	left join SYS_MENU t2 on t1.pid=t2.id
+	inner join sys_role_menu t3 on t1.id = t3.menu_id
+
+		<where>
+
+			<if test="roleId != null and roleId != '' ">
+				AND t3.role_id = #{roleId}
+			</if>
+
+		</where>
+
+	  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SYS_MENU
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.SysMenu"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SYS_MENU
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="menuName != null and menuName != ''" >
+      	            menu_name ,
+      	       </if>
+			 <if test="url != null and url != ''" >
+      	            url ,
+      	       </if>
+			 <if test="icon != null and icon != ''" >
+      	            icon ,
+      	       </if>
+			 <if test="pid != null and pid != ''" >
+      	            pid ,
+      	       </if>
+			 <if test="type != null and type != ''" >
+      	            type ,
+      	       </if>
+			 <if test="orderNum != null and orderNum != ''" >
+      	            order_num ,
+      	       </if>
+
+			 <if test="updateTime != null and updateTime != ''" >
+      	            update_time ,
+      	       </if>
+			 <if test="remark != null and remark != ''" >
+      	            remark ,
+      	       </if>
+		create_time
+	</trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="menuName != null and menuName != ''" >
+      	            #{menuName},
+      	       </if>
+			
+			
+			 <if test="url != null and url != ''" >
+      	            #{url},
+      	       </if>
+			
+			
+			 <if test="icon != null and icon != ''" >
+      	            #{icon},
+      	       </if>
+			 <if test="pid != null and pid != ''" >
+      	            #{pid},
+      	       </if>
+			 <if test="type != null and type != ''" >
+      	            #{type},
+      	       </if>
+			 <if test="orderNum != null and orderNum != ''" >
+      	            #{orderNum},
+      	       </if>
+			 <if test="updateTime != null and updateTime != ''" >
+      	            #{updateTime},
+      	       </if>
+			 <if test="remark != null and remark != ''" >
+      	            #{remark},
+      	       </if>
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.SysMenu" >
+    update  SYS_MENU
+    <set >
+			
+			
+			
+			 <if test="menuName != null and menuName != ''" >
+					menu_name   = #{menuName },
+      	       </if>
+			
+			
+			 <if test="url != null and url != ''" >
+					url   = #{url },
+      	       </if>
+			
+			
+			 <if test="icon != null and icon != ''" >
+					icon   = #{icon },
+      	       </if>
+			
+			
+			 <if test="pid != null and pid != ''" >
+					pid   = #{pid },
+      	       </if>
+			
+			
+			 <if test="type != null and type != ''" >
+					type   = #{type },
+      	       </if>
+			
+			
+			 <if test="orderNum != null and orderNum != ''" >
+					order_num   = #{orderNum },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+
+					update_time   = sysdate(),
+
+			
+			
+			 <if test="remark != null and remark != ''" >
+					remark   = #{remark },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

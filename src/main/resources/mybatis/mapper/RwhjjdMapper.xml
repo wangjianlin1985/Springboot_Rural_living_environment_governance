@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.RwhjjdMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.Rwhjjd" >
+  
+		    <result column="id" property="id" />
+		    <result column="rwleixing" property="rwleixing" />
+		    <result column="zhishilaiyuan" property="zhishilaiyuan" />
+		    <result column="ertong" property="ertong" />
+		    <result column="qingshaonian" property="qingshaonian" />
+		    <result column="zhongnian" property="zhongnian" />
+		    <result column="laonian" property="laonian" />
+		    <result column="yijianfenlei" property="yijianfenlei" />
+		    <result column="yijianbiaoti" property="yijianbiaoti" />
+		    <result column="yijianneirong" property="yijianneirong" />
+		    <result column="chulizhuangtai" property="chulizhuangtai" />
+		    <result column="xuanchuanbiaoti" property="xuanchuanbiaoti" />
+		    <result column="xuanchuanshijian" property="xuanchuanshijian" />
+		    <result column="xuanchuanneirong" property="xuanchuanneirong" />
+		    <result column="fangshi" property="fangshi" />
+		    <result column="create_time" property="createTime" />
+  
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  RWHJJD
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+   
+     <select id="tongji" resultMap="BaseResultMap">
+   SELECT IFNULL(SUM(ertong),0) AS ertong ,IFNULL(SUM(qingshaonian),0) AS qingshaonian, 
+IFNULL(SUM(zhongnian),0) AS zhongnian,IFNULL(SUM(laonian),0) AS laonian FROM rwhjjd 
+  </select>
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.Rwhjjd">
+    select 
+    *
+    from  RWHJJD
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="rwleixing != null and rwleixing != '' ">
+				AND rwleixing = #{rwleixing}
+			</if>   
+			<if test="zhishilaiyuan != null and zhishilaiyuan != '' ">
+				AND zhishilaiyuan = #{zhishilaiyuan}
+			</if>   
+			<if test="ertong != null and ertong != '' ">
+				AND ertong = #{ertong}
+			</if>   
+			<if test="qingshaonian != null and qingshaonian != '' ">
+				AND qingshaonian = #{qingshaonian}
+			</if>   
+			<if test="zhongnian != null and zhongnian != '' ">
+				AND zhongnian = #{zhongnian}
+			</if>   
+			<if test="laonian != null and laonian != '' ">
+				AND laonian = #{laonian}
+			</if>   
+			<if test="yijianfenlei != null and yijianfenlei != '' ">
+				AND yijianfenlei = #{yijianfenlei}
+			</if>   
+			<if test="yijianbiaoti != null and yijianbiaoti != '' ">
+				AND yijianbiaoti = #{yijianbiaoti}
+			</if>   
+			<if test="yijianneirong != null and yijianneirong != '' ">
+				AND yijianneirong = #{yijianneirong}
+			</if>   
+			<if test="chulizhuangtai != null and chulizhuangtai != '' ">
+				AND chulizhuangtai = #{chulizhuangtai}
+			</if>   
+			<if test="xuanchuanbiaoti != null and xuanchuanbiaoti != '' ">
+				AND xuanchuanbiaoti = #{xuanchuanbiaoti}
+			</if>   
+			<if test="xuanchuanshijian != null and xuanchuanshijian != '' ">
+				AND xuanchuanshijian = #{xuanchuanshijian}
+			</if>   
+			<if test="xuanchuanneirong != null and xuanchuanneirong != '' ">
+				AND xuanchuanneirong = #{xuanchuanneirong}
+			</if>   
+			<if test="fangshi != null and fangshi != '' ">
+				AND fangshi = #{fangshi}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  RWHJJD
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.Rwhjjd"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  RWHJJD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="rwleixing != null and rwleixing != ''" >
+      	            rwleixing ,
+      	       </if>
+			 <if test="zhishilaiyuan != null and zhishilaiyuan != ''" >
+      	            zhishilaiyuan ,
+      	       </if>
+			 <if test="ertong != null and ertong != ''" >
+      	            ertong ,
+      	       </if>
+			 <if test="qingshaonian != null and qingshaonian != ''" >
+      	            qingshaonian ,
+      	       </if>
+			 <if test="zhongnian != null and zhongnian != ''" >
+      	            zhongnian ,
+      	       </if>
+			 <if test="laonian != null and laonian != ''" >
+      	            laonian ,
+      	       </if>
+			 <if test="yijianfenlei != null and yijianfenlei != ''" >
+      	            yijianfenlei ,
+      	       </if>
+			 <if test="yijianbiaoti != null and yijianbiaoti != ''" >
+      	            yijianbiaoti ,
+      	       </if>
+			 <if test="yijianneirong != null and yijianneirong != ''" >
+      	            yijianneirong ,
+      	       </if>
+			 <if test="chulizhuangtai != null and chulizhuangtai != ''" >
+      	            chulizhuangtai ,
+      	       </if>
+			 <if test="xuanchuanbiaoti != null and xuanchuanbiaoti != ''" >
+      	            xuanchuanbiaoti ,
+      	       </if>
+			 <if test="xuanchuanshijian != null and xuanchuanshijian != ''" >
+      	            xuanchuanshijian ,
+      	       </if>
+			 <if test="xuanchuanneirong != null and xuanchuanneirong != ''" >
+      	            xuanchuanneirong ,
+      	       </if>
+			 <if test="fangshi != null and fangshi != ''" >
+      	            fangshi ,
+      	       </if>
+      	            create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="rwleixing != null and rwleixing != ''" >
+      	            #{rwleixing},
+      	       </if>
+			
+			
+			 <if test="zhishilaiyuan != null and zhishilaiyuan != ''" >
+      	            #{zhishilaiyuan},
+      	       </if>
+			
+			
+			 <if test="ertong != null and ertong != ''" >
+      	            #{ertong},
+      	       </if>
+			
+			
+			 <if test="qingshaonian != null and qingshaonian != ''" >
+      	            #{qingshaonian},
+      	       </if>
+			
+			
+			 <if test="zhongnian != null and zhongnian != ''" >
+      	            #{zhongnian},
+      	       </if>
+			
+			
+			 <if test="laonian != null and laonian != ''" >
+      	            #{laonian},
+      	       </if>
+			
+			
+			 <if test="yijianfenlei != null and yijianfenlei != ''" >
+      	            #{yijianfenlei},
+      	       </if>
+			
+			
+			 <if test="yijianbiaoti != null and yijianbiaoti != ''" >
+      	            #{yijianbiaoti},
+      	       </if>
+			
+			
+			 <if test="yijianneirong != null and yijianneirong != ''" >
+      	            #{yijianneirong},
+      	       </if>
+			
+			
+			 <if test="chulizhuangtai != null and chulizhuangtai != ''" >
+      	            #{chulizhuangtai},
+      	       </if>
+			
+			
+			 <if test="xuanchuanbiaoti != null and xuanchuanbiaoti != ''" >
+      	            #{xuanchuanbiaoti},
+      	       </if>
+			
+			
+			 <if test="xuanchuanshijian != null and xuanchuanshijian != ''" >
+      	            #{xuanchuanshijian},
+      	       </if>
+			
+			
+			 <if test="xuanchuanneirong != null and xuanchuanneirong != ''" >
+      	            #{xuanchuanneirong},
+      	       </if>
+			
+			
+			 <if test="fangshi != null and fangshi != ''" >
+      	            #{fangshi},
+      	       </if>
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.Rwhjjd" >
+    update  RWHJJD
+    <set >
+			
+			
+			
+			 <if test="rwleixing != null and rwleixing != ''" >
+					rwleixing   = #{rwleixing },
+      	       </if>
+			
+			
+			 <if test="zhishilaiyuan != null and zhishilaiyuan != ''" >
+					zhishilaiyuan   = #{zhishilaiyuan },
+      	       </if>
+			
+			
+			 <if test="ertong != null and ertong != ''" >
+					ertong   = #{ertong },
+      	       </if>
+			
+			
+			 <if test="qingshaonian != null and qingshaonian != ''" >
+					qingshaonian   = #{qingshaonian },
+      	       </if>
+			
+			
+			 <if test="zhongnian != null and zhongnian != ''" >
+					zhongnian   = #{zhongnian },
+      	       </if>
+			
+			
+			 <if test="laonian != null and laonian != ''" >
+					laonian   = #{laonian },
+      	       </if>
+			
+			
+			 <if test="yijianfenlei != null and yijianfenlei != ''" >
+					yijianfenlei   = #{yijianfenlei },
+      	       </if>
+			
+			
+			 <if test="yijianbiaoti != null and yijianbiaoti != ''" >
+					yijianbiaoti   = #{yijianbiaoti },
+      	       </if>
+			
+			
+			 <if test="yijianneirong != null and yijianneirong != ''" >
+					yijianneirong   = #{yijianneirong },
+      	       </if>
+			
+			
+			 <if test="chulizhuangtai != null and chulizhuangtai != ''" >
+					chulizhuangtai   = #{chulizhuangtai },
+      	       </if>
+			
+			
+			 <if test="xuanchuanbiaoti != null and xuanchuanbiaoti != ''" >
+					xuanchuanbiaoti   = #{xuanchuanbiaoti },
+      	       </if>
+			
+			
+			 <if test="xuanchuanshijian != null and xuanchuanshijian != ''" >
+					xuanchuanshijian   = #{xuanchuanshijian },
+      	       </if>
+			
+			
+			 <if test="xuanchuanneirong != null and xuanchuanneirong != ''" >
+					xuanchuanneirong   = #{xuanchuanneirong },
+      	       </if>
+			
+			
+			 <if test="fangshi != null and fangshi != ''" >
+					fangshi   = #{fangshi },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

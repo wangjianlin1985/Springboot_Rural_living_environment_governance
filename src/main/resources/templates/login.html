@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common :: common_header(~{::title},~{::link},~{::script})">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>农村人居环境治理综合监管平台</title>
+    <meta name="description" content="C&&C">
+    
+    <!-- <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/cap/css/ry-ui.css" th:href="@{/cap/css/ry-ui.css?v=4.0.0}" rel="stylesheet"/> -->
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error { position:inherit;  }</style>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+  <!--   <link rel="stylesheet" th:href="@{/css/style.css}"> -->
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+</head>
+
+<body class="signin">
+
+    <div class="signinpanel  signin">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <!-- <h1><img alt="[ 高就 ]" src="../static/cap.png" style="width: 250px;" th:src="@{/cap.png}"></h1> -->
+                        <h1>[ 农村人居环境治理综合监管平台 ]</h1>
+                    </div>
+                    <div class="m-b"></div>
+                   <!--  <h4>欢迎使用 <strong>C&&C 后台管理</strong></h4> -->
+                  <!--   <ul class="m-b">
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> SpringBoot</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> Mybatis</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> Shiro</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> Thymeleaf</li>
+                        <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> Bootstrap</li>
+                    </ul>
+                    <strong>还没有账号？ <a href="#">立即注册&raquo;</a></strong> -->
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form id="signupForm">
+                    <h4 class="no-margins">登录：</h4>
+                    <!-- <p class="m-t-md">你若不离不弃，我必生死相依</p> -->
+                    <input type="text"     name="userNo" class="form-control uname"     placeholder="用户名"   />
+                    <input type="password" name="password" class="form-control pword"     placeholder="密码"    />
+					<div class="row m-t" >
+						<div class="col-xs-6">
+						    <input type="text" name="verificationCode" class="form-control code" placeholder="验证码" maxlength="5" autocomplete="off">
+						</div>
+						<div class="col-xs-6">
+							<a href="javascript:void(0);" title="点击更换验证码">
+								<img th:src="@{/kaptcha/verification}" id="verification" class="imgcode" width="100%" style="height: 32px;"/>
+							</a>
+						</div>
+					</div>
+                    <div class="checkbox-custom" id="tip">
+				       <!--  <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label> -->
+				    </div>
+                    <a class="btn btn-success btn-block" id="btnSubmit" onclick="login()" data-loading="正在验证登录，请稍后...">登录</a>
+
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer" >
+           <!--  <div class="pull-left">
+                &copy; 2019 All Rights Reserved. RuoYi <br>
+            </div> -->
+        </div>
+    </div>
+
+
+
+
+<script type="text/javascript">
+/*<![CDATA[*/
+var basePath = "[[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]";
+/*]]>*/
+$(function(){
+	$(".uname").focus(function(){
+		$("#tip").empty();
+	});
+	$(".pword").focus(function(){
+		$("#tip").empty();
+	});
+	$("#verificationCode").focus(function(){
+		$("#tip").empty();
+	});
+	  // 刷新验证码
+    $("#verification").bind("click", function () {
+        $(this).hide().attr('src', basePath+'/kaptcha/verification').fadeIn();
+    });
+})
+
+function loginPage(){
+	$('#setModel').modal('show');
+}
+
+function formReset(){
+	$('#signupForm')[0].reset();
+}
+
+
+function login(){
+	var temp = getFormJson("signupForm");
+	if(temp.userNo == ""){
+		$("#tip").html("<font color='red'>* 请输入用户名！</font>");
+		return;
+	}
+	if(temp.password == ""){
+		$("#tip").html("<font color='red'>* 请输入密码！</font>");
+		return;
+	}
+	if(temp.verificationCode == 0){
+		$("#tip").html("<font color='red'>* 请输入验证码！</font>");
+		return;
+	}
+	
+	$.post(basePath+"/TLogin/login", temp ,function(data) {
+		
+		if(data.isFlag == 0){
+			window.location.href=basePath+"/TLogin/main";
+		}else if(data.isFlag == 1){
+			$("#tip").html("<font color='red'>*密码输入不正确！</font>");
+		}else if(data.isFlag == 2){
+			$("#tip").html("<font color='red'>*用户名输入不正确！</font>");
+		}
+		else if(data.isFlag == 3){
+			$("#tip").html("<font color='red'>*验证码输入不正确！</font>");
+		}
+		
+	});
+}
+
+
+$(document).keyup(function(event){
+    if(event.keyCode ==13){
+        login();
+    }
+});
+
+
+</script>
+
+
+
+
+
+<!--  全局js 
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+验证插件
+<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js" th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/cap/js/ry-ui.js" th:src="@{/cap/js/ry-ui.js?v=4.0.0}"></script>
+<script src="../static/cap/login.js" th:src="@{/cap/login.js}"></script> -->
+</body>
+</html>

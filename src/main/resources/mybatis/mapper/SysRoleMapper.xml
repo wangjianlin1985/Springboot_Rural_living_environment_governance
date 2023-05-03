@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.SysRole" >
+  
+		    <result column="id" property="id" />
+		    <result column="role_name" property="roleName" />
+		    <result column="create_time" property="createTime" />
+	  		<result column="role_code" property="roleCode" />
+
+		    <result column="update_time" property="updateTime" />
+		    <result column="remark" property="remark" />
+
+   
+  </resultMap>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    *
+    from  SYS_ROLE
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.SysRole">
+    select 
+    *
+    from  SYS_ROLE
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="roleName != null and roleName != '' ">
+				AND role_name = #{roleName}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+			<if test="updateTime != null and updateTime != '' ">
+				AND update_time = #{updateTime}
+			</if>   
+			<if test="remark != null and remark != '' ">
+				AND remark = #{remark}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SYS_ROLE
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.SysRole"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SYS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="roleName != null and roleName != ''" >
+      	            role_name ,
+      	       </if>
+
+		<if test="roleCode != null and roleCode != ''" >
+			role_code ,
+		</if>
+
+			 <if test="remark != null and remark != ''" >
+      	            remark ,
+      	       </if>
+      	           create_time 
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="roleName != null and roleName != ''" >
+      	            #{roleName},
+      	       </if>
+		<if test="roleCode != null and roleCode != ''" >
+			#{roleCode},
+		</if>
+
+			 <if test="remark != null and remark != ''" >
+      	            #{remark},
+      	       </if>
+			
+			sysdate()
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.SysRole" >
+    update  SYS_ROLE
+    <set >
+			
+			
+			
+			 <if test="roleName != null and roleName != ''" >
+					role_name   = #{roleName },
+      	       </if>
+
+		<if test="roleCode != null and roleCode != ''" >
+			role_code   = #{roleCode },
+		</if>
+
+
+			 <if test="remark != null and remark != ''" >
+					remark   = #{remark },
+      	       </if>
+		update_time   = sysdate(),
+			
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="common :: common_header(~{::title},~{::link},~{::script})">
+<meta charset="utf-8" />
+<title>系统</title>
+<link rel="stylesheet" th:href="@{/css/ex.css}" />
+	</head>
+
+
+<style type="text/css">
+			
+body {
+	
+	background-color:#e6e8ea;
+	padding-right:0px !important;
+	    background-color: white;
+	    height:100%;
+}
+.modal{
+	overflow:auto !important;
+	padding-right:0px !important;
+}
+
+
+</style>
+<script type="text/javascript">
+
+</script>
+
+<body >
+<!--cantainer-fluid  开始 -->
+<div class = "cantainer">
+	<!-- row-fluid  第一个开始 -->
+	<div class="row">
+		<!-- col-md-12  第一个开始 -->
+		<div class = "col-md-12">
+			<!-- panel panel-default  第一个开始 -->
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<!-- 查询条件开始 -->
+				<form id="searchForm" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-md-1 control-label" for = "customerName">客户姓名</label>
+						<div class="col-sm-2">
+							<input class="form-control col-sm" type="text" name="customerName">
+						</div>
+						
+						<div class="col-sm-6" align="left">
+							<button type="button" class="btn btn-sm btn-success" onclick = "operation.searchForm()">
+								<span class="glyphicon glyphicon-search"></span>查询
+							</button>
+							<!-- <button type="button" class="btn btn-md btn-info" onclick="">
+								<span class="glyphicon glyphicon-download"></span>导出
+							</button> -->
+						</div>
+					</div>
+				
+				</form>
+				<!-- 查询条件结束 -->
+				</div>
+			</div>
+			<!-- panel panel-default  第一个开始 -->
+		</div>
+		<!-- col-md-12  第一个结束 -->	
+	</div>
+	<!-- row-fluid  第一个结束 -->
+	
+	<!-- row-fluid  第二个开始-->
+	<div class="row-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<!-- toolbar开始 -->
+				<div id="toolbar" class="btn-toolbar" role="toolbar">
+					<button id="add_btn" type="button" class="btn  btn-success btn-sm" onclick = "operation.addWindow()">
+						<span class="glyphicon glyphicon-plus"></span> 新增字典类型
+					</button>
+
+					<button id="edit_btn" type="button" class="btn  btn-info  btn-sm" onclick="operation.editWindow()">
+						<span class="glyphicon glyphicon-edit"></span> 编辑
+					</button>
+					<button id="delete_btn" type="button" class="btn  btn-danger btn-sm" onclick="operation.deleteFrom()">
+						<span class="glyphicon glyphicon-minus"></span> 删除
+					</button>
+
+					<button type="button" class="btn  btn-success btn-sm" onclick = "operation.addDetailsTableWindow()">
+						<span class="glyphicon glyphicon-plus"></span> 字典详情
+					</button>
+
+				</div>
+				<!-- toolbar结束 -->
+				<table id="dg"></table>
+			</div>
+		</div>
+	</div>
+<!-- row-fluid  第二个结束-->
+
+
+</div>
+<!--cantainer-fluid  结束 -->
+
+<!-- 第一个model 开始 -->
+<div id="setModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:900px">
+		<div class="modal-content">
+			<div class="modal-header">
+				编辑
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+				<form id="setForm" class="form-horizontal">
+					<input type="hidden" name="id">
+					<input type="hidden" name="pid" value="0">
+					
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="dataType"> 数据类别</label>
+								<div class="col-sm-6">
+									<input class="form-control"  name="dataType"  placeholder="请输入 数据类别"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label" for="dataDesc">数据描述</label>
+								<div class="col-sm-6">
+									<textarea class="form-control"  name="dataDesc" rows="5" placeholder="请输入数据描述"></textarea>
+								</div>
+							</div>
+
+				</form>	
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+				<button id="add_save_btn" type="button" class="btn btn-success" onclick = "operation.addForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="edit_save_btn" type="button" class="btn btn-info" onclick = "operation.editForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="delete_save_btn" type="button" class="btn btn-warning" onclick = "operation.closeMoal()">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+<!-- 第一个model 结束 -->
+
+
+
+<!-- 第二个model 开始 -->
+<div id="setDetailsModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:900px">
+		<div class="modal-content">
+			<div class="modal-header">
+				编辑
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+				<form id="setDetailsForm" class="form-horizontal">
+					<input type="hidden" name="pid" id="pid">
+					<input type="hidden" name="id">
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="dataType"> 数据类别</label>
+						<div class="col-sm-6">
+							<input class="form-control"  name="dataType" id="dataType2" readonly="true" placeholder="请输入 数据类别"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="dataName">字典中文名称</label>
+						<div class="col-sm-6">
+							<input class="form-control"  name="dataName"  placeholder="请输入字典中文名称"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="dataValue">字典值</label>
+						<div class="col-sm-6">
+							<input class="form-control"  name="dataValue"  placeholder="请输入字典值"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="sortNo"> 顺序 </label>
+						<div class="col-sm-6">
+							<input class="form-control"  name="sortNo"  placeholder="请输入 顺序 " type="number"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="dataDesc">数据描述</label>
+						<div class="col-sm-6">
+							<input class="form-control"  name="dataDesc"  placeholder="请输入数据描述"/>
+						</div>
+					</div>
+
+
+
+
+
+				</form>
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+				<button id="add_save_details_btn" type="button" class="btn btn-success" onclick = "operation.addDetailsForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="edit_save_details_btn" type="button" class="btn btn-info" onclick = "operation.editDetailsForm()">
+					<span class="glyphicon glyphicon-ok"></span>保存
+				</button>
+				<button id="delete_save_details_btn" type="button" class="btn btn-warning" onclick = "operation.closeDetailsMoal()">
+					<span class="glyphicon glyphicon-remove"></span>关闭
+				</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+<!-- 第二个model 结束 -->
+
+
+<!-- 第三个model 开始 -->
+<div id="setDetailsTableModal" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" data-keybord="false">
+	<div class="modal-dialog" style="width:1200px">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">字典详情</h4>
+			</div>
+			<!-- modal-body 开始 -->
+			<div class="modal-body">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<!-- toolbar开始 -->
+						<div id="toolbarDetails" class="btn-toolbar" role="toolbar">
+							<button id="add_details_btn" type="button" class="btn  btn-success btn-sm" onclick = "operation.addDetailsWindow()">
+								<span class="glyphicon glyphicon-plus"></span> 新增
+							</button>
+
+							<button id="edit_details_btn" type="button" class="btn  btn-info  btn-sm" onclick="operation.editDetailsWindow()">
+								<span class="glyphicon glyphicon-edit"></span> 编辑
+							</button>
+							<button id="delete_details_btn" type="button" class="btn  btn-danger btn-sm" onclick="operation.deleteDetailsFrom()">
+								<span class="glyphicon glyphicon-minus"></span> 删除
+							</button>
+						</div>
+						<!-- toolbar结束 -->
+						<table id="dgDetails"></table>
+					</div>
+				</div>
+			</div>
+			<!-- modal-body 结束 -->
+			<div class="modal-footer">
+
+			</div>
+
+		</div>
+	</div>
+
+</div>
+<!-- 第三个model 结束 -->
+
+
+
+
+
+
+
+<script type="text/javascript" th:inline="none">
+
+	var pid=0; //父类id
+	var openDetalsWindowscount=1; //首次打开字典详情页面
+	var detail_rows;   //保存字典详情行
+//用户操作
+var operation={
+	searchForm:function(){
+		$('#dg').bootstrapTable("refresh");
+	},
+	//弹出添加页面
+	addWindow:function(){
+		$('#setModal').modal('show');
+		formObj.setBtnIsShow("add_save_btn","edit_save_btn",1);
+
+	},
+	//添加表单
+	addForm:function(){
+		$("#setForm").bootstrapValidator('validate');
+		if($("#setForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setForm");
+			$.post("/SysDictData/insertSysDictData", temp ,function(data) {
+			
+				$("#dg").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				$('#setForm').data('bootstrapValidator').resetForm(true);
+				$('#setForm')[0].reset();
+				$('#setModal').modal('hide');
+			});
+		}
+		
+	},
+	//弹出修改页面
+	editWindow:function(){
+		var rows = $('#dg').bootstrapTable('getSelections');
+		if(rows.length == 1  ){
+			setForm("#setForm",rows[0]);
+			$('#setModal').modal('show');
+			formObj.setBtnIsShow("add_save_btn","edit_save_btn",0);
+			
+		}else{
+			message.alert("请选择一条要修改的数据！");
+			return;
+		}
+		
+	},
+	//修改表单
+	editForm:function(){
+		var validate = $("#setForm").bootstrapValidator('validate');
+		if($("#setForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setForm");
+			$.post("/SysDictData/updateSysDictData", temp ,function(data) {
+				
+				$("#dg").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				$('#setForm').data('bootstrapValidator').resetForm(true);
+				$('#setForm')[0].reset();
+				$('#setModal').modal('hide');
+			});
+		}
+		
+	},
+	//删除表单
+	deleteFrom:function(){
+		var rows = $("#dg").bootstrapTable("getSelections");
+		if(rows.length == 1  ){
+			bootbox.confirm({
+				size:"small",
+				title:"提示",
+				message:"确认删除这条数据吗？",
+				callback:function(result){
+					if(result){
+						$.post("/SysDictData/deleteSysDictData", {id:rows[0].id} ,function(data) {
+							
+							$("#dg").bootstrapTable("refresh");
+							message.alert(data.showInfo);
+							
+						});
+						
+					}
+				}
+			});
+			
+		}else{
+			message.alert("请选择一条要删除的数据！");
+			return;
+		}
+		
+	},
+	//关闭页面
+	closeMoal:function(){
+		//$('#setForm').data('bootstrapValidator').resetForm(true);
+		$('#setForm')[0].reset();
+		$('#setModal').modal('hide');
+	},
+
+	addDetailsTableWindow: function(){
+		detail_rows = $("#dg").bootstrapTable("getSelections");
+		if(detail_rows.length == 1  ){
+			$('#setDetailsTableModal').modal('show');
+			pid = detail_rows[0].id;
+		}else{
+			message.alert("请选择数据类型！");
+			return;
+		}
+
+		$('#dgDetails').bootstrapTable({
+			url:"/SysDictData/query",
+			sidePagination:"server",
+			queryParams:function (params){
+				var temp = {}
+				temp.rows = params.limit;
+				temp.currentPage = (params.offset/params.limit)+1;
+				temp.pid=pid;
+				return temp;
+
+			},
+			method: "post",
+			contentType:"application/x-www-form-urlencoded",
+			pagination:true,
+			pageNumber:1,
+			pageSize:10,
+			pageList:[10,25,50,100],
+			//search:true,
+			clickToSelect:true,
+			singleSelect:true,
+			toolbar:'#toolbarDetails',
+			columns:[[
+				{field:'ck',width:'2%',checkbox:true,lign:'center'},
+				{field:'id',title:'id',width:10,align:'center',visible:false},
+				{title: '父ID ', field: 'pid', align: 'center', valign: 'middle',visible:false},
+				{title: ' 数据类别', field: 'dataType', align: 'center', valign: 'middle',visible:true},
+				{title: '字典名称', field: 'dataName', align: 'center', valign: 'middle',visible:true},
+				{title: '字典值 value', field: 'dataValue', align: 'center', valign: 'middle',visible:true},
+				{title: '顺序 ', field: 'sortNo', align: 'center', valign: 'middle',visible:true},
+				/*{title: '状态', field: 'status', align: 'center', valign: 'middle',visible:true},*/
+				{title: '数据描述', field: 'dataDesc', align: 'center', valign: 'middle',visible:true},
+				{title: '创建时间 ', field: 'createTime', align: 'center', valign: 'middle',visible:true},
+
+
+
+			]],
+		})
+
+	},
+
+
+//弹出添加页面
+	addDetailsWindow:function(){
+		$('#setDetailsModal').modal('show');
+		formObj.setBtnIsShow("add_save_details_btn","edit_save_details_btn",1);
+		$("#pid").val(pid);
+		$("#dataType2").val(detail_rows[0].dataType);
+	},
+	//添加表单
+	addDetailsForm:function(){
+		$("#setDetailsForm").bootstrapValidator('validate');
+		if($("#setDetailsForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setDetailsForm");
+			$.post("/SysDictData/insertSysDictData", temp ,function(data) {
+
+				$("#dgDetails").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				//$('#setDetailsForm').data('bootstrapValidator').resetForm(true);
+				$('#setDetailsForm')[0].reset();
+				$('#setDetailsModal').modal('hide');
+			});
+		}
+
+	},
+	//弹出修改页面
+	editDetailsWindow:function(){
+		var rows = $('#dgDetails').bootstrapTable('getSelections');
+		if(rows.length == 1  ){
+			setForm("#setDetailsForm",rows[0]);
+			$('#setDetailsModal').modal('show');
+			formObj.setBtnIsShow("add_save_details_btn","edit_save_details_btn",0);
+
+		}else{
+			message.alert("请选择一条要修改的数据！");
+			return;
+		}
+
+	},
+	//修改表单
+	editDetailsForm:function(){
+		var validate = $("#setDetailsForm").bootstrapValidator('validate');
+		if($("#setDetailsForm").data("bootstrapValidator").isValid()){
+			var temp = getFormJson("setDetailsForm");
+			$.post("/SysDictData/updateSysDictData", temp ,function(data) {
+
+				$("#dgDetails").bootstrapTable("refresh");
+				message.alert(data.showInfo);
+				$('#setDetailsForm')[0].reset();
+				$('#setDetailsModal').modal('hide');
+			});
+		}
+
+	},
+	//删除表单
+	deleteDetailsFrom:function(){
+		var rows = $("#dgDetails").bootstrapTable("getSelections");
+		if(rows.length == 1  ){
+			bootbox.confirm({
+				size:"small",
+				title:"提示",
+				message:"确认删除这条数据吗？",
+				callback:function(result){
+					if(result){
+						$.post("/SysDictData/deleteSysDictData", {id:rows[0].id} ,function(data) {
+
+							$("#dgDetails").bootstrapTable("refresh");
+							message.alert(data.showInfo);
+
+						});
+
+					}
+				}
+			});
+
+		}else{
+			message.alert("请选择一条要删除的数据！");
+			return;
+		}
+
+	},
+	//关闭页面
+	closeDetailsMoal:function(){
+		//$('#setDetailsForm').data('bootstrapValidator').resetForm(true);
+		$('#setDetailsForm')[0].reset();
+		$('#setDetailsModal').modal('hide');
+	},
+}
+
+
+
+
+$(function(){
+	$('#dg').bootstrapTable({
+		url:"/SysDictData/query",
+		sidePagination:"server",
+		queryParams:fmt.queryParams,
+		method: "post",
+        contentType:"application/x-www-form-urlencoded",
+		pagination:true,
+		pageNumber:1,
+		pageSize:10,
+		pageList:[10,25,50,100],
+		//search:true,
+		clickToSelect:true,
+		singleSelect:true,
+		toolbar:'#toolbar',
+		columns:columns,
+	})
+	
+});
+
+//表格格式化
+var fmt = {
+	queryParams:function(params){
+		var temp = getFormJson("searchForm");
+		temp.rows = params.limit;
+		temp.currentPage = (params.offset/params.limit)+1;
+		temp.pid=0;
+		return temp;
+		
+	},	
+	setTime:function(value,row,index){
+		
+		return formatTimeYMDhms(value);  //转成年月日时分秒
+	},
+setOpt:function(value,row,index){
+		var html ="";
+		html +='<button type="button" class="btn btn-sm btn-info" onclick = "operation.addScore('+index+')"><span class="glyphicon glyphicon-add"></span>添加成绩</button>'
+		return html;
+	},	
+	setActImgUrl:function(value,row,index){
+		return '<img src="'+value+'" style="width:100px;heigth:100px"></img>';
+	}		
+}
+var columns=[[
+ 	 {
+		field:'ck',width:'2%',
+		checkbox:true,
+		align:'center',
+
+	},
+	{
+		field:'id',
+		title:'id',
+		width:10,
+		align:'center',
+		visible:false
+	},
+
+
+					/*{title: ' 父ID ', field: 'pid', align: 'center', valign: 'middle',visible:true},*/
+					{title: ' 数据类别', field: 'dataType', align: 'center', valign: 'middle',visible:true},
+					/*{title: '字典名称key', field: 'dataName', align: 'center', valign: 'middle',visible:true},
+					{title: ' 数据名称/值 value', field: 'dataValue', align: 'center', valign: 'middle',visible:true},
+					{title: ' 顺序 ', field: 'sortNo', align: 'center', valign: 'middle',visible:true},
+					{title: '0正常', field: 'status', align: 'center', valign: 'middle',visible:true},*/
+					{title: '数据描述', field: 'dataDesc', align: 'center', valign: 'middle',visible:true},
+					{title: '创建时间 ', field: 'createTime', align: 'center', valign: 'middle',visible:true},
+
+	
+	
+]];
+
+
+$(function(){
+
+	$('#setDetailsTableModal').on('hidden.bs.modal', function () {
+		$("#dgDetails").bootstrapTable('destroy');
+		openDetalsWindowscount=1;//初始化一下
+
+	})
+
+
+	$("#setForm").bootstrapValidator({
+		/* live:'disabled', */
+		excluded:[':disabled'],
+		feedbackIcons: {
+    　　　　　　　　valid: 'glyphicon glyphicon-ok',
+    　　　　　　　　invalid: 'glyphicon glyphicon-remove',
+    　　　　　　　　validating: 'glyphicon glyphicon-refresh'
+　　　　　   },
+		fields:{
+
+
+
+
+				pid:{
+					validators:{
+						 notEmpty: {
+							message:" 父ID 不能为空!",
+						},
+					}
+
+				},
+
+
+
+				dataType:{
+					validators:{
+						 notEmpty: {
+							message:" 数据类别不能为空!",
+						},
+					}
+
+				},
+
+
+
+				dataName:{
+					validators:{
+						 notEmpty: {
+							message:"字典名称key不能为空!",
+						},
+					}
+
+				},
+
+
+
+				dataValue:{
+					validators:{
+						 notEmpty: {
+							message:" 数据名称/值 value不能为空!",
+						},
+					}
+
+				},
+
+
+
+				sortNo:{
+					validators:{
+						 notEmpty: {
+							message:" 顺序 不能为空!",
+						},
+					}
+
+				},
+
+
+
+				status:{
+					validators:{
+						 notEmpty: {
+							message:"0正常不能为空!",
+						},
+					}
+
+				},
+
+
+
+				dataDesc:{
+					validators:{
+						 notEmpty: {
+							message:"数据描述不能为空!",
+						},
+					}
+
+				},
+
+
+
+				createTime:{
+					validators:{
+						 notEmpty: {
+							message:"创建时间 不能为空!",
+						},
+					}
+
+				},
+
+
+
+                customerName:{
+					validators:{
+						 notEmpty: {
+							message:"客户姓名不能为空!",
+						},
+							stringLength: {
+	                            min: 1,
+	                            max: 32,
+	                            message: '客户姓名长度必须在1到32位字符之间'
+	                        },
+					}
+
+				},
+
+
+
+		}
+
+	});
+
+
+	$("#setForm").bootstrapValidator({
+		/* live:'disabled', */
+		excluded:[':disabled'],
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields:{
+
+
+
+
+			pid:{
+				validators:{
+					notEmpty: {
+						message:" 父ID 不能为空!",
+					},
+				}
+
+			},
+
+
+
+			dataType:{
+				validators:{
+					notEmpty: {
+						message:" 数据类别不能为空!",
+					},
+				}
+
+			},
+
+
+
+			dataName:{
+				validators:{
+					notEmpty: {
+						message:"字典名称key不能为空!",
+					},
+				}
+
+			},
+
+
+
+			dataValue:{
+				validators:{
+					notEmpty: {
+						message:" 数据名称/值 value不能为空!",
+					},
+				}
+
+			},
+
+
+
+			sortNo:{
+				validators:{
+					notEmpty: {
+						message:" 顺序 不能为空!",
+					},
+				}
+
+			},
+
+
+
+			status:{
+				validators:{
+					notEmpty: {
+						message:"0正常不能为空!",
+					},
+				}
+
+			},
+
+
+
+			dataDesc:{
+				validators:{
+					notEmpty: {
+						message:"数据描述不能为空!",
+					},
+				}
+
+			},
+
+
+
+			createTime:{
+				validators:{
+					notEmpty: {
+						message:"创建时间 不能为空!",
+					},
+				}
+
+			},
+
+
+
+			customerName:{
+				validators:{
+					notEmpty: {
+						message:"客户姓名不能为空!",
+					},
+					stringLength: {
+						min: 1,
+						max: 32,
+						message: '客户姓名长度必须在1到32位字符之间'
+					},
+				}
+
+			},
+
+
+
+		}
+
+	});
+
+
+})
+
+$(document).on('show.bs.modal', '.modal', function(event) {
+	$(this).appendTo($('body'));
+}).on('shown.bs.modal', '.modal.in', function(event) {
+	setModalsAndBackdropsOrder();
+}).on('hidden.bs.modal', '.modal', function(event) {
+	setModalsAndBackdropsOrder();
+});
+
+
+function setModalsAndBackdropsOrder() {
+	var modalZIndex = 1040;
+	$('.modal.in').each(function(index) {
+		var $modal = $(this);
+		modalZIndex++;
+		$modal.css('zIndex', modalZIndex);
+		$modal.next('.modal-backdrop.in').addClass('hidden').css('zIndex', modalZIndex - 1);
+	});
+	$('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>

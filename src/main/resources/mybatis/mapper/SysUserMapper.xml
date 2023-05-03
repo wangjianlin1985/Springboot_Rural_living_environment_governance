@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lhz.project.mapper.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.lhz.project.entity.SysUser" >
+  
+		    <result column="id" property="id" />
+		    <result column="user_no" property="userNo" />
+		    <result column="password" property="password" />
+		    <result column="name" property="name" />
+		    <result column="department_id" property="departmentId" />
+		    <result column="create_time" property="createTime" />
+		    <result column="update_time" property="updateTime" />
+		    <result column="remark" property="remark" />
+  			<result column="leave_office" property="leaveOffice" />
+    		<result column="department_name" property="departmentName" />
+    		
+    		<result column="role_id" property="roleId" />
+    		<result column="role_name" property="roleName" />
+    		
+
+  </resultMap>
+ 
+ 
+ <!-- 登录 -->
+ <select id="login" resultMap="BaseResultMap"  parameterType="com.lhz.project.entity.SysUser">
+	 SELECT
+	 t1.*,t2.department_name,t3.`role_id`,t4.`role_name`
+	 FROM  SYS_USER t1
+	 LEFT JOIN sys_department t2 ON t2.id = t1.department_id
+	 LEFT JOIN sys_user_role t3 ON t1.id=t3.`user_id`
+	 LEFT JOIN sys_role t4 ON t3.`role_id` = t4.`id`
+    where user_no = #{userNo}
+ 
+ </select>
+ 
+ <!-- 获取最大人员编号 -->
+  <select id="getMaxUserNo" resultMap="BaseResultMap" >
+     select 
+    ifnull(max(user_no),0)  user_no
+    from  SYS_USER
+
+ 
+ </select>
+ 
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    t1.*,t2.department_name
+    from  SYS_USER t1
+    left join sys_department t2 on t2.id = t1.department_id
+    where t1.id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--s.song_name  like concat('%',#{songName},'%')-->
+   
+  
+     <select id="findList" resultMap="BaseResultMap" parameterType="com.lhz.project.entity.SysUser">
+    SELECT 
+    t1.*,t2.department_name,t3.`role_id`,t4.`role_name`
+    FROM  SYS_USER t1
+    LEFT JOIN sys_department t2 ON t2.id = t1.department_id
+    LEFT JOIN sys_user_role t3 ON t1.id=t3.`user_id`
+    LEFT JOIN sys_role t4 ON t3.`role_id` = t4.`id`
+   <where>
+   
+			<if test="id != null and id != '' ">
+				AND id = #{id}
+			</if>   
+			<if test="userNo != null and userNo != '' ">
+				AND user_no = #{userNo}
+			</if>   
+			<if test="password != null and password != '' ">
+				AND password = #{password}
+			</if>   
+			<if test="name != null and name != '' ">
+				AND name = #{name}
+			</if>
+			<if test="departmentId != null and departmentId != '' ">
+				AND department_id = #{departmentId}
+			</if>   
+			<if test="createTime != null and createTime != '' ">
+				AND create_time = #{createTime}
+			</if>   
+			<if test="updateTime != null and updateTime != '' ">
+				AND update_time = #{updateTime}
+			</if>   
+			<if test="remark != null and remark != '' ">
+				AND remark = #{remark}
+			</if>   
+   
+		 
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from  SYS_USER
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.lhz.project.entity.SysUser"   keyProperty="id" useGeneratedKeys="true" >
+    insert into  SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+			 <if test="userNo != null and userNo != ''" >
+      	            user_no ,
+      	       </if>
+			 <if test="password != null and password != ''" >
+      	            password ,
+      	       </if>
+			 <if test="name != null and name != ''" >
+      	            name ,
+      	       </if>
+			 <if test="departmentId != null and departmentId != ''" >
+      	            department_id ,
+      	       </if>
+			
+			 <if test="remark != null and remark != ''" >
+      	            remark ,
+      	       </if>
+      	        <if test="leaveOffice != null and leaveOffice != ''" >
+      	            leave_office ,
+      	       </if>
+      	        create_time 
+      	       
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			
+			
+			
+			 <if test="userNo != null and userNo != ''" >
+      	            #{userNo},
+      	       </if>
+			
+			
+			 <if test="password != null and password != ''" >
+      	            #{password},
+      	       </if>
+			
+			
+			 <if test="name != null and name != ''" >
+      	            #{name},
+      	       </if>
+			
+			
+			 <if test="departmentId != null and departmentId != ''" >
+      	            #{departmentId},
+      	       </if>
+
+			 <if test="remark != null and remark != ''" >
+      	            #{remark},
+      	       </if>
+			 <if test="leaveOffice != null and leaveOffice != ''" >
+      	            #{leaveOffice},
+      	       </if>
+			
+				sysdate()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lhz.project.entity.SysUser" >
+    update  SYS_USER
+    <set >
+			
+			
+			
+			 <if test="userNo != null and userNo != ''" >
+					user_no   = #{userNo },
+      	       </if>
+			
+			
+			 <if test="password != null and password != ''" >
+					password   = #{password },
+      	       </if>
+			
+			
+			 <if test="name != null and name != ''" >
+					name   = #{name },
+      	       </if>
+			
+			
+			 <if test="departmentId != null and departmentId != ''" >
+					department_id   = #{departmentId },
+      	       </if>
+			
+			
+			 <if test="createTime != null and createTime != ''" >
+					create_time   = #{createTime },
+      	       </if>
+			
+			
+		
+					
+      	   
+			
+			
+			 <if test="remark != null and remark != ''" >
+					remark   = #{remark },
+      	       </if>
+			 <if test="leaveOffice != null and leaveOffice != ''" >
+					leave_office   = #{leaveOffice },
+      	       </if>
+		update_time   =sysdate()
+			
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>
